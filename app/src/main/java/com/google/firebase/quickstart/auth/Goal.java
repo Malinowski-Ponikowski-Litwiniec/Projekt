@@ -60,9 +60,9 @@ public class Goal extends AppCompatActivity {
 
             }else if(Integer.valueOf(ageString) >150){
                 Toast.makeText(Goal.this,"Podany wiek jest za wysoki",Toast.LENGTH_SHORT).show();
-            }else if(Integer.valueOf(weightString) > 200){
+            }else if(Integer.valueOf(weightString) > 300){
                 Toast.makeText(Goal.this,"Podana waga jest za duża",Toast.LENGTH_SHORT).show();
-            }else if(Integer.valueOf(heightString) > 150){
+            }else if(Integer.valueOf(heightString) > 250){
                 Toast.makeText(Goal.this,"Podany wzrost jest za duży",Toast.LENGTH_SHORT).show();
             }
 

@@ -37,8 +37,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
     private static final String TAG = "EmailPassword";
 
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
+
     private EditText mEmailField;
     private EditText mPasswordField;
 
@@ -51,8 +50,7 @@ public class EmailPasswordActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emailpassword);
 
-        // Views
-        mStatusTextView = findViewById(R.id.status);
+
 
         mEmailField = findViewById(R.id.field_email);
         mPasswordField = findViewById(R.id.field_password);
@@ -142,7 +140,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
+
                         }
                         hideProgressDialog();
                         // [END_EXCLUDE]
@@ -227,7 +225,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
 
         } else {
-            mStatusTextView.setText(R.string.signed_out);
+
 
 
             findViewById(R.id.email_password_buttons).setVisibility(View.VISIBLE);
