@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "996182195790",
+    "firebase_url": "https://aplikacja-zywieniowa-e68e5.firebaseio.com",
+    "project_id": "aplikacja-zywieniowa-e68e5",
+    "storage_bucket": "aplikacja-zywieniowa-e68e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996182195790:android:87fcb66cc6ca320a",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996182195790-o9skomnj7jp02dscgrc4snjcnoavi02s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnju_76IDyRnDRLf0D1TIfmcrkbsHDJPE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
