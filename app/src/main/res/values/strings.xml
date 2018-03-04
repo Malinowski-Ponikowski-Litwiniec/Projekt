@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Aplikacja Żywieniowa</string>
+
+
+
+    <string name="label_emailpassword">Email/Password Authentication</string>
+    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+
+
+
+    <string name="label_firebase_ui">FirebaseUI Auth</string>
+    <string name="desc_firebase_ui">Use the FirebaseUI-Android library to authenticate with Firebase.</string>
+
+    <string name="hint_user_id">User ID</string>
+
+    <string name="sign_in">Zaloguj się</string>
+    <string name="create_account">Utwórz konto</string>
+    <string name="sign_out">Wyloguj się</string>
+    <string name="verify_email">Zweryfikuj Email</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Loading…</string>
+    <string name="signed_in">Zalogowany</string>
+    <string name="signed_out">Wylogowany</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Hasło</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="auth_failed">Uwierzytelnienie nie powiodło się</string>
+
+
+
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="status_code_sent">Code Sent</string>
+    <string name="status_verification_failed">Verification failed</string>
+    <string name="status_verification_succeeded">Verification succeeded</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
+    <string name="instant_validation">(instant validation)</string>
+    <string name="send_to_database">Wyślij</string>
+    <string name="firebase_status_fmt">User: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+
+
+    <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="emailpassword_title_text">Email i Hasło</string>
+
+
+    <string name="firebaseui_status_fmt">Firebase User: %s</string>
+    <string name="firebaseui_title_text">FirebaseUI Auth</string>
+
+    <string name="id_fmt">User ID: %s</string>
+    <string name="email_fmt">Email: %s</string>
+    <string name="title_activity_goal">Goal</string>
+
+    <string-array name="spinnerActivityLevel">
+        <item>niska</item>
+        <item>średnia</item>
+        <item>wysoka</item>
+        <item>bardzo wysoka</item>
+    </string-array>
+    <string-array name="spinnerSex">
+        <item>kobieta</item>
+        <item>mężczyzna</item>
+    </string-array>
+</resources>
