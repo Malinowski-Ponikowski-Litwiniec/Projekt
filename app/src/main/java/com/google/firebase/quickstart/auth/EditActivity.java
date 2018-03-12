@@ -1,15 +1,9 @@
 package com.google.firebase.quickstart.auth;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -26,8 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Goal extends AppCompatActivity {
-
+public class EditActivity extends AppCompatActivity {
     public Button btn;
     public FirebaseAuth mAuth;
     public EditText age;
@@ -35,14 +28,17 @@ public class Goal extends AppCompatActivity {
     public EditText height;
     public Spinner activity;
     public Spinner sex;
-    public Button sendToDatabaseBtn;
-    public Button sendToDatabase;
-    private FirebaseDatabase mFirebaseDatabase;
 
+    public Button sendToDatabase;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+
+    public FirebaseAuth myAtuh = FirebaseAuth.getInstance();
+    public String curId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goal);
+        setContentView(R.layout.activity_edit);
         btn = (Button) findViewById(R.id.btn);
         btn.setOnClickListener(btnClick);
         mAuth = FirebaseAuth.getInstance();
@@ -54,13 +50,39 @@ public class Goal extends AppCompatActivity {
         activity = (Spinner) findViewById(R.id.spinnerActivityLevel);
         sex = (Spinner) findViewById(R.id.spinnerSex);
 
+        curId = myAtuh.getUid();
+
+
+        myRef.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                List notes = new ArrayList<>();
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                        String noteString = noteDataSnapshot.getKey();
+                        int note = noteDataSnapshot.getValue(CurrentUser.class).getWiek();
+                        notes.add(noteString);
+                        notes.add(note);
+
+                }
+                System.out.println("-------------------");
+                for (int i = 0; i < notes.size(); i++) {
+                    System.out.println(notes.get(i));
+                }
+                System.out.println("-------------------");
+
             }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("DUPA");
+                System.out.println("-------------------");
 
+            }
 
-
-
-
+        });
+    }
 
 
     View.OnClickListener sendToDatabaseOnClick = new View.OnClickListener() {
@@ -71,16 +93,16 @@ public class Goal extends AppCompatActivity {
             String weightString = weight.getText().toString();
             String heightString = height.getText().toString();
             if (ageString.isEmpty() || weightString.isEmpty() || heightString.isEmpty()) {
-                Toast.makeText(Goal.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditActivity.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
             }else if (!ageString.matches(reg) || !weightString.matches(reg) || !heightString.matches(reg)) {
-                Toast.makeText(Goal.this, "Podaj poprawne dane", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditActivity.this, "Podaj poprawne dane", Toast.LENGTH_SHORT).show();
 
             }else if(Integer.valueOf(ageString) >150){
-                Toast.makeText(Goal.this,"Podany wiek jest za wysoki",Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditActivity.this,"Podany wiek jest za wysoki",Toast.LENGTH_SHORT).show();
             }else if(Integer.valueOf(weightString) > 300){
-                Toast.makeText(Goal.this,"Podana waga jest za duża",Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditActivity.this,"Podana waga jest za duża",Toast.LENGTH_SHORT).show();
             }else if(Integer.valueOf(heightString) > 250){
-                Toast.makeText(Goal.this,"Podany wzrost jest za duży",Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditActivity.this,"Podany wzrost jest za duży",Toast.LENGTH_SHORT).show();
             }
 
             else {
@@ -88,8 +110,8 @@ public class Goal extends AppCompatActivity {
                         Double.valueOf(height.getText().toString()), activity.getSelectedItem().toString(), sex.getSelectedItem().toString());
                 RealtimeDatabase rd = new RealtimeDatabase();
                 rd.setValue(user);
-                Toast.makeText(Goal.this, "Wysłano", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Goal.this,EditOrDelete.class);
+                Toast.makeText(EditActivity.this, "Wysłano", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(EditActivity.this,EditOrDelete.class);
                 startActivity(intent);
             }
         }
@@ -105,7 +127,7 @@ public class Goal extends AppCompatActivity {
     private void updateUI() {
         Intent intent = new Intent(this, EmailPasswordActivity.class);
         startActivity(intent);
-    }
+    };
 
 
 }

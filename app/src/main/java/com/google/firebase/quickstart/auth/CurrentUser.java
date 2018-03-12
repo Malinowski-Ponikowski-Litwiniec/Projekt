@@ -12,8 +12,28 @@ public class CurrentUser {
     public double wzrost;
     public String activity;
     public String sex;
+    public String uId;
+    public String id;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
+    CurrentUser(){
+
+}
     CurrentUser(int wiek, double waga, double wzrost, String activity, String sex){
         this.wiek = wiek;
         this.waga = waga;

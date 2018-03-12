@@ -31,4 +31,4 @@ public class BaseActivity extends AppCompatActivity {
         hideProgressDialog();
     }
 
-} 
+}
