@@ -69,7 +69,7 @@ public class Goal extends AppCompatActivity {
     View.OnClickListener sendToDatabaseOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Pattern pattern = Pattern.compile("^(?:0|[1-9][0-9]*)\\.[0-9]+$");
+            Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
             Matcher matcher = pattern.matcher("88.8");
             boolean result=matcher.matches();
 
@@ -85,13 +85,13 @@ public class Goal extends AppCompatActivity {
                 Toast.makeText(Goal.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
             }else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
                 Toast.makeText(Goal.this, "Podaj poprawne dane", Toast.LENGTH_SHORT).show();
-//
-//            }else if(Integer.valueOf(ageString) >150){
-//                Toast.makeText(Goal.this,"Podany wiek jest za wysoki",Toast.LENGTH_SHORT).show();
-//            }else if(Integer.valueOf(weightString) > 300){
-//                Toast.makeText(Goal.this,"Podana waga jest za duża",Toast.LENGTH_SHORT).show();
-//            }else if(Integer.valueOf(heightString) > 250){
-//                Toast.makeText(Goal.this,"Podany wzrost jest za duży",Toast.LENGTH_SHORT).show();
+
+            }else if(Double.valueOf(ageString) >150){
+                Toast.makeText(Goal.this,"Podany wiek jest za wysoki",Toast.LENGTH_SHORT).show();
+            }else if(Double.valueOf(weightString) > 300){
+                Toast.makeText(Goal.this,"Podana waga jest za duża",Toast.LENGTH_SHORT).show();
+            }else if(Double.valueOf(heightString) > 250){
+                Toast.makeText(Goal.this,"Podany wzrost jest za duży",Toast.LENGTH_SHORT).show();
            }
 
             else {
