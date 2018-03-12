@@ -22,9 +22,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.twitter.Regex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Goal extends AppCompatActivity {
 
@@ -66,26 +69,34 @@ public class Goal extends AppCompatActivity {
     View.OnClickListener sendToDatabaseOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String reg = "([0-9]+)";
+            Pattern pattern = Pattern.compile("^(?:0|[1-9][0-9]*)\\.[0-9]+$");
+            Matcher matcher = pattern.matcher("88.8");
+            boolean result=matcher.matches();
+
             String ageString = age.getText().toString();
+            Matcher ageMatcher = pattern.matcher(ageString);
             String weightString = weight.getText().toString();
+            Matcher weightMatcher = pattern.matcher(weightString);
+
             String heightString = height.getText().toString();
+            Matcher heightMatcher = pattern.matcher(heightString);
+
             if (ageString.isEmpty() || weightString.isEmpty() || heightString.isEmpty()) {
                 Toast.makeText(Goal.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
-            }else if (!ageString.matches(reg) || !weightString.matches(reg) || !heightString.matches(reg)) {
+            }else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
                 Toast.makeText(Goal.this, "Podaj poprawne dane", Toast.LENGTH_SHORT).show();
-
-            }else if(Integer.valueOf(ageString) >150){
-                Toast.makeText(Goal.this,"Podany wiek jest za wysoki",Toast.LENGTH_SHORT).show();
-            }else if(Integer.valueOf(weightString) > 300){
-                Toast.makeText(Goal.this,"Podana waga jest za duża",Toast.LENGTH_SHORT).show();
-            }else if(Integer.valueOf(heightString) > 250){
-                Toast.makeText(Goal.this,"Podany wzrost jest za duży",Toast.LENGTH_SHORT).show();
-            }
+//
+//            }else if(Integer.valueOf(ageString) >150){
+//                Toast.makeText(Goal.this,"Podany wiek jest za wysoki",Toast.LENGTH_SHORT).show();
+//            }else if(Integer.valueOf(weightString) > 300){
+//                Toast.makeText(Goal.this,"Podana waga jest za duża",Toast.LENGTH_SHORT).show();
+//            }else if(Integer.valueOf(heightString) > 250){
+//                Toast.makeText(Goal.this,"Podany wzrost jest za duży",Toast.LENGTH_SHORT).show();
+           }
 
             else {
-                CurrentUser user = new CurrentUser(Integer.valueOf(age.getText().toString()), Double.valueOf(weight.getText().toString()),
-                        Double.valueOf(height.getText().toString()), activity.getSelectedItem().toString(), sex.getSelectedItem().toString());
+                CurrentUser user = new CurrentUser(age.getText().toString(), weight.getText().toString(),
+                        height.getText().toString(), activity.getSelectedItem().toString(), sex.getSelectedItem().toString());
                 RealtimeDatabase rd = new RealtimeDatabase();
                 rd.setValue(user);
                 Toast.makeText(Goal.this, "Wysłano", Toast.LENGTH_LONG).show();

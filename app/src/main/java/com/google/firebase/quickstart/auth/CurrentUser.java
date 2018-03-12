@@ -7,21 +7,15 @@ package com.google.firebase.quickstart.auth;
 public class CurrentUser {
 
 
-    public int wiek;
-    public double waga;
-    public double wzrost;
+    public String wiek;
+    public String waga;
+    public String wzrost;
     public String activity;
     public String sex;
     public String uId;
-    public String id;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+
 
     public String getuId() {
         return uId;
@@ -34,7 +28,7 @@ public class CurrentUser {
     CurrentUser(){
 
 }
-    CurrentUser(int wiek, double waga, double wzrost, String activity, String sex){
+    CurrentUser(String wiek, String waga, String wzrost, String activity, String sex){
         this.wiek = wiek;
         this.waga = waga;
         this.wzrost =wzrost;
@@ -62,27 +56,27 @@ public class CurrentUser {
     }
 
 
-    public int getWiek() {
+    public String getWiek() {
         return wiek;
     }
 
-    public void setWiek(int wiek) {
+    public void setWiek(String wiek) {
         this.wiek = wiek;
     }
 
-    public double getWaga() {
+    public String getWaga() {
         return waga;
     }
 
-    public void setWaga(double waga) {
+    public void setWaga(String waga) {
         this.waga = waga;
     }
 
-    public double getWzrost() {
+    public String getWzrost() {
         return wzrost;
     }
 
-    public void setWzrost(double wzrost) {
+    public void setWzrost(String  wzrost) {
         this.wzrost = wzrost;
     }
 }

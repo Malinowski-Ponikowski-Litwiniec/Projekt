@@ -23,7 +23,7 @@ public class EditOrDelete extends AppCompatActivity {
     View.OnClickListener editBtnOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(EditOrDelete.this,Goal.class);
+            Intent intent = new Intent(EditOrDelete.this,EditActivity.class);
             startActivity(intent);
         }
     };
