@@ -26,6 +26,7 @@
         <activity android:name=".EditOrDelete" />
         <activity android:name=".DeleteActivity" />
         <activity android:name=".EditActivity"></activity>
+        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>

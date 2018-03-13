@@ -266,8 +266,16 @@ public class EmailPasswordActivity extends BaseActivity implements
             createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
         } else if (i == R.id.email_sign_in_button) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-            Intent intent = new Intent(this,EditOrDelete.class);
-            startActivity(intent);
+
+
+
+              //TO BYLO NIEPOTRZEBNE
+//            Intent intent = new Intent(this,EditOrDelete.class);
+//            startActivity(intent);
+
+
+
+
         } else if (i == R.id.sign_out_button) {
             signOut();
         } else if (i == R.id.verify_email_button) {
