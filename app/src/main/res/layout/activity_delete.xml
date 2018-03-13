@@ -28,15 +28,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Email"
-                    android:textAlignment="center"/>
+                    android:text="Podaj swój email:"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center" />
 
                 <EditText
                     android:id="@+id/emailInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="" />
+                    android:layout_marginTop="40dp"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
 
             </LinearLayout>
 
@@ -49,12 +52,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Na pewno chcesz usunąć konto?"
+            android:layout_marginTop="50dp"
             android:textAlignment="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
             <CheckBox
@@ -77,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="100dp"
             android:text="Usuń konto" />
 
     </LinearLayout>

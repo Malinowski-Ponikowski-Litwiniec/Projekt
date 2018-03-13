@@ -31,7 +31,7 @@
             android:layout_x="186dp"
             android:layout_y="196dp"
             android:textSize="18sp"
-            android:inputType="number"/>
+            android:inputType="numberDecimal"/>
 
         <TextView
             android:id="@+id/textViewWeight"
@@ -49,7 +49,7 @@
             android:layout_x="189dp"
             android:layout_y="136dp"
             android:textSize="18sp"
-            android:inputType="number"/>
+            android:inputType="numberDecimal"/>
 
         <TextView
             android:id="@+id/textViewHeight"
@@ -67,7 +67,7 @@
             android:layout_x="192dp"
             android:layout_y="257dp"
             android:textSize="18sp"
-            android:inputType="number"/>
+            android:inputType="numberDecimal"/>
 
         <TextView
             android:id="@+id/textViewActivityLevel"

@@ -63,8 +63,8 @@ public class Goal extends AppCompatActivity {
     View.OnClickListener sendToDatabaseOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
 
+            Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
 
             String ageString = age.getText().toString();
             Matcher ageMatcher = pattern.matcher(ageString);
@@ -78,7 +78,6 @@ public class Goal extends AppCompatActivity {
                 Toast.makeText(Goal.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
             } else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
                 Toast.makeText(Goal.this, "Podaj poprawne dane", Toast.LENGTH_SHORT).show();
-
             } else if (Double.valueOf(ageString) > 150) {
                 Toast.makeText(Goal.this, "Podany wiek jest za wysoki", Toast.LENGTH_SHORT).show();
             } else if (Double.valueOf(weightString) > 300) {
@@ -108,6 +107,8 @@ public class Goal extends AppCompatActivity {
         Intent intent = new Intent(this, EmailPasswordActivity.class);
         startActivity(intent);
     }
+
+    ;
 
 
 }

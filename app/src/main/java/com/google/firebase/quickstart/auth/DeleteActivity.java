@@ -64,13 +64,13 @@ public class DeleteActivity extends AppCompatActivity {
             }else{
                 if(takCheck.isChecked()){
                     FirebaseUser user = mAuth.getCurrentUser();
-                    if(user.getEmail().equals(emailInput.getText().toString())) {
+                    if(user.getEmail().equals((emailInput.getText().toString()).replaceAll("\\s",""))) {
                         user.delete();
                         Toast.makeText(DeleteActivity.this, "Twoje konto zostało usunięte", Toast.LENGTH_SHORT).show();
 
 //                        Intent intent = new Intent(DeleteActivity.this,EmailPasswordActivity.class);
 //                        startActivity(intent);
-                        
+
                         mAuth.signOut();
                         updateUI();
                     }else{

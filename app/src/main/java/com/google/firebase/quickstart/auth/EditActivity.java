@@ -99,7 +99,7 @@ public class EditActivity extends AppCompatActivity {
                                 activity.setSelection(3);
                                 break;
                             default:
-                                System.out.println("DUPA");
+                                System.out.println("NULL");
                                 break;
                         }
                         switch (entry.getValue().getSex()) {
@@ -111,7 +111,7 @@ public class EditActivity extends AppCompatActivity {
                                 break;
 
                             default:
-                                System.out.println("DUPA");
+                                System.out.println("NULL");
                                 break;
                         }
 
@@ -121,7 +121,8 @@ public class EditActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("DUPA");
+                System.out.println("-------------------");
+                System.out.println("DATABASE ERROR");
                 System.out.println("-------------------");
 
             }
@@ -137,7 +138,6 @@ public class EditActivity extends AppCompatActivity {
 
             Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
 
-
             String ageString = age.getText().toString();
             Matcher ageMatcher = pattern.matcher(ageString);
             String weightString = weight.getText().toString();
@@ -145,6 +145,7 @@ public class EditActivity extends AppCompatActivity {
 
             String heightString = height.getText().toString();
             Matcher heightMatcher = pattern.matcher(heightString);
+
             if (ageString.isEmpty() || weightString.isEmpty() || heightString.isEmpty()) {
                 Toast.makeText(EditActivity.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
             } else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
