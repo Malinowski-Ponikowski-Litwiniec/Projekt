@@ -67,8 +67,12 @@ public class DeleteActivity extends AppCompatActivity {
                     if(user.getEmail().equals(emailInput.getText().toString())) {
                         user.delete();
                         Toast.makeText(DeleteActivity.this, "Twoje konto zostało usunięte", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(DeleteActivity.this,EmailPasswordActivity.class);
-                        startActivity(intent);
+
+//                        Intent intent = new Intent(DeleteActivity.this,EmailPasswordActivity.class);
+//                        startActivity(intent);
+                        
+                        mAuth.signOut();
+                        updateUI();
                     }else{
                         Toast.makeText(DeleteActivity.this, "Podałeś nieprawidłowy email", Toast.LENGTH_SHORT).show();
                     }
@@ -78,4 +82,9 @@ public class DeleteActivity extends AppCompatActivity {
             }
         }
     };
+
+    private void updateUI() {
+        Intent intent = new Intent(this, EmailPasswordActivity.class);
+        startActivity(intent);
+    }
 }
