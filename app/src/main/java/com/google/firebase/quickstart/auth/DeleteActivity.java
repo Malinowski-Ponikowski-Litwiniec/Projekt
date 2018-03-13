@@ -68,6 +68,7 @@ public class DeleteActivity extends AppCompatActivity {
                         user.delete();
                         Toast.makeText(DeleteActivity.this, "Twoje konto zostało usunięte", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(DeleteActivity.this,EmailPasswordActivity.class);
+                        startActivity(intent);
                     }else{
                         Toast.makeText(DeleteActivity.this, "Podałeś nieprawidłowy email", Toast.LENGTH_SHORT).show();
                     }

@@ -57,21 +57,14 @@ public class Goal extends AppCompatActivity {
         activity = (Spinner) findViewById(R.id.spinnerActivityLevel);
         sex = (Spinner) findViewById(R.id.spinnerSex);
 
-            }
-
-
-
-
-
-
+    }
 
 
     View.OnClickListener sendToDatabaseOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
-            Matcher matcher = pattern.matcher("88.8");
-            boolean result=matcher.matches();
+
 
             String ageString = age.getText().toString();
             Matcher ageMatcher = pattern.matcher(ageString);
@@ -83,24 +76,22 @@ public class Goal extends AppCompatActivity {
 
             if (ageString.isEmpty() || weightString.isEmpty() || heightString.isEmpty()) {
                 Toast.makeText(Goal.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
-            }else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
+            } else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
                 Toast.makeText(Goal.this, "Podaj poprawne dane", Toast.LENGTH_SHORT).show();
 
-            }else if(Double.valueOf(ageString) >150){
-                Toast.makeText(Goal.this,"Podany wiek jest za wysoki",Toast.LENGTH_SHORT).show();
-            }else if(Double.valueOf(weightString) > 300){
-                Toast.makeText(Goal.this,"Podana waga jest za duża",Toast.LENGTH_SHORT).show();
-            }else if(Double.valueOf(heightString) > 250){
-                Toast.makeText(Goal.this,"Podany wzrost jest za duży",Toast.LENGTH_SHORT).show();
-           }
-
-            else {
+            } else if (Double.valueOf(ageString) > 150) {
+                Toast.makeText(Goal.this, "Podany wiek jest za wysoki", Toast.LENGTH_SHORT).show();
+            } else if (Double.valueOf(weightString) > 300) {
+                Toast.makeText(Goal.this, "Podana waga jest za duża", Toast.LENGTH_SHORT).show();
+            } else if (Double.valueOf(heightString) > 250) {
+                Toast.makeText(Goal.this, "Podany wzrost jest za duży", Toast.LENGTH_SHORT).show();
+            } else {
                 CurrentUser user = new CurrentUser(age.getText().toString(), weight.getText().toString(),
                         height.getText().toString(), activity.getSelectedItem().toString(), sex.getSelectedItem().toString());
                 RealtimeDatabase rd = new RealtimeDatabase();
                 rd.setValue(user);
                 Toast.makeText(Goal.this, "Wysłano", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Goal.this,EditOrDelete.class);
+                Intent intent = new Intent(Goal.this, EditOrDelete.class);
                 startActivity(intent);
             }
         }

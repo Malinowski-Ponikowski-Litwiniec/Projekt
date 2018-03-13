@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EditActivity extends AppCompatActivity {
     public Button btn;
@@ -62,14 +64,9 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                Map<String, CurrentUser> map = new HashMap<>();
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
 
-             // List notes = new ArrayList<>();
-
-
-                 Map<String, CurrentUser> map = new HashMap<>();
-              for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-               // int wiek = noteDataSnapshot.getValue(CurrentUser.class).getWiek();
-               // notes.add(wiek);
                     CurrentUser currentUser = new CurrentUser(noteDataSnapshot.getValue(CurrentUser.class).getWiek(),
                             noteDataSnapshot.getValue(CurrentUser.class).getWaga(),
                             noteDataSnapshot.getValue(CurrentUser.class).getWzrost(),
@@ -82,45 +79,45 @@ public class EditActivity extends AppCompatActivity {
                 }
 
 
-               for (Map.Entry<String, CurrentUser> entry : map.entrySet()) {
-                   if (entry.getKey().equals(curId)) {
+                for (Map.Entry<String, CurrentUser> entry : map.entrySet()) {
+                    if (entry.getKey().equals(curId)) {
 
-                       age.setText(entry.getValue().getWiek());
-                       weight.setText(entry.getValue().getWaga());
-                       height.setText(entry.getValue().getWzrost());
-                       switch (entry.getValue().getActivity()) {
-                           case "niska":
-                               activity.setSelection(0);
-                               break;
-                           case "średnia":
-                               activity.setSelection(1);
-                               break;
-                           case "wysoka":
-                               activity.setSelection(2);
-                               break;
-                           case "bardzo wysoka":
-                               activity.setSelection(3);
-                               break;
-                           default:
-                               System.out.println("DUPA");
-                               break;
-                       }
-                       switch (entry.getValue().getSex()) {
-                           case "kobieta":
-                               sex.setSelection(0);
-                               break;
-                           case "mężczyzna":
-                               sex.setSelection(1);
-                               break;
+                        age.setText(entry.getValue().getWiek());
+                        weight.setText(entry.getValue().getWaga());
+                        height.setText(entry.getValue().getWzrost());
+                        switch (entry.getValue().getActivity()) {
+                            case "niska":
+                                activity.setSelection(0);
+                                break;
+                            case "średnia":
+                                activity.setSelection(1);
+                                break;
+                            case "wysoka":
+                                activity.setSelection(2);
+                                break;
+                            case "bardzo wysoka":
+                                activity.setSelection(3);
+                                break;
+                            default:
+                                System.out.println("DUPA");
+                                break;
+                        }
+                        switch (entry.getValue().getSex()) {
+                            case "kobieta":
+                                sex.setSelection(0);
+                                break;
+                            case "mężczyzna":
+                                sex.setSelection(1);
+                                break;
 
-                           default:
-                               System.out.println("DUPA");
-                               break;
-                       }
+                            default:
+                                System.out.println("DUPA");
+                                break;
+                        }
 
-                   }
-               }
-          }
+                    }
+                }
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -137,24 +134,30 @@ public class EditActivity extends AppCompatActivity {
     View.OnClickListener sendToDatabaseOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String reg = "([0-9]+)";
+
+            Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
+
+
             String ageString = age.getText().toString();
+            Matcher ageMatcher = pattern.matcher(ageString);
             String weightString = weight.getText().toString();
+            Matcher weightMatcher = pattern.matcher(weightString);
+
             String heightString = height.getText().toString();
+            Matcher heightMatcher = pattern.matcher(heightString);
             if (ageString.isEmpty() || weightString.isEmpty() || heightString.isEmpty()) {
                 Toast.makeText(EditActivity.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
-            } else if (!ageString.matches(reg) || !weightString.matches(reg) || !heightString.matches(reg)) {
+            } else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
                 Toast.makeText(EditActivity.this, "Podaj poprawne dane", Toast.LENGTH_SHORT).show();
-
-            } else if (Integer.valueOf(ageString) > 150) {
+            } else if (Double.valueOf(ageString) > 150) {
                 Toast.makeText(EditActivity.this, "Podany wiek jest za wysoki", Toast.LENGTH_SHORT).show();
-            } else if (Integer.valueOf(weightString) > 300) {
+            } else if (Double.valueOf(weightString) > 300) {
                 Toast.makeText(EditActivity.this, "Podana waga jest za duża", Toast.LENGTH_SHORT).show();
-            } else if (Integer.valueOf(heightString) > 250) {
+            } else if (Double.valueOf(heightString) > 250) {
                 Toast.makeText(EditActivity.this, "Podany wzrost jest za duży", Toast.LENGTH_SHORT).show();
             } else {
                 CurrentUser user = new CurrentUser(age.getText().toString(), weight.getText().toString(),
-                      height.getText().toString(), activity.getSelectedItem().toString(), sex.getSelectedItem().toString());
+                        height.getText().toString(), activity.getSelectedItem().toString(), sex.getSelectedItem().toString());
                 RealtimeDatabase rd = new RealtimeDatabase();
                 rd.setValue(user);
                 Toast.makeText(EditActivity.this, "Wysłano", Toast.LENGTH_LONG).show();
