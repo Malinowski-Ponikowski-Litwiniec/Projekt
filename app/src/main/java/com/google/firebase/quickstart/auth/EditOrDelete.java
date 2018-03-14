@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,7 +14,7 @@ public class EditOrDelete extends AppCompatActivity {
     public Button editBtn;
     public Button deleteBtn;
     public Button signOutBtn;
-
+    public Button addBtn;
     private FirebaseAuth mAuth;
 
     @Override
@@ -23,7 +24,8 @@ public class EditOrDelete extends AppCompatActivity {
          editBtn = (Button)findViewById(R.id.editBtn);
          deleteBtn = (Button)findViewById(R.id.deleteBtn);
          signOutBtn = (Button)findViewById(R.id.signOutBtn);
-
+        addBtn = (Button)findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(addBtnOnClick);
          editBtn.setOnClickListener(editBtnOnClick);
          deleteBtn.setOnClickListener(deleteBtnOnClick);
          signOutBtn.setOnClickListener(singOutBtnClick);
@@ -31,6 +33,13 @@ public class EditOrDelete extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
     }
+    View.OnClickListener addBtnOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(EditOrDelete.this,AddProductToDatabase.class);
+            startActivity(intent);
+        }
+    };
     View.OnClickListener editBtnOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

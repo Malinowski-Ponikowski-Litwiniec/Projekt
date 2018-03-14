@@ -24,6 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Edytuj swój profil" />
+        <Button
+            android:id="@+id/addBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dodaj produkt do bazy" />
 
         <Button
             android:id="@+id/signOutBtn"

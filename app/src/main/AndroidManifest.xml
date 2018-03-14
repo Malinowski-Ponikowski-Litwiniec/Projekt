@@ -25,8 +25,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EditOrDelete" />
         <activity android:name=".DeleteActivity" />
-        <activity android:name=".EditActivity"></activity>
-        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".EditActivity" />
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".AddProductToDatabase"></activity>
     </application>
 
 </manifest>
