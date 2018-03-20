@@ -27,7 +27,10 @@
         <activity android:name=".DeleteActivity" />
         <activity android:name=".EditActivity" />
         <activity android:name=".BaseActivity" />
-        <activity android:name=".AddProductToDatabase"></activity>
+        <activity android:name=".AddProductToDatabase" />
+        <activity android:name=".AddDailyProducts" />
+        <activity android:name=".AddDailyProductsFrom" />
+        <activity android:name=".SelectDate"></activity>
     </application>
 
 </manifest>

@@ -29,12 +29,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Dodaj produkt do bazy" />
+        <Button
+            android:id="@+id/addToDalyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
+            android:text="Dodaj produkt do dziennej listy" />
+        <Button
+            android:id="@+id/showDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pokaz wybrane produkty z danego dnia" />
         <Button
             android:id="@+id/signOutBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:text="Wyloguj się" />
+
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

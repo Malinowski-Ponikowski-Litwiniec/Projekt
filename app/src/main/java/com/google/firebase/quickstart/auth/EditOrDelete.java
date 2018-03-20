@@ -16,6 +16,8 @@ public class EditOrDelete extends AppCompatActivity {
     public Button signOutBtn;
     public Button addBtn;
     private FirebaseAuth mAuth;
+    public Button addToDalyBtn;
+    public Button showDates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +31,27 @@ public class EditOrDelete extends AppCompatActivity {
          editBtn.setOnClickListener(editBtnOnClick);
          deleteBtn.setOnClickListener(deleteBtnOnClick);
          signOutBtn.setOnClickListener(singOutBtnClick);
-
+        addToDalyBtn = (Button)findViewById(R.id.addToDalyBtn);
+        addToDalyBtn.setOnClickListener(addToDalyBtnOnCLick);
         mAuth = FirebaseAuth.getInstance();
-
+        showDates = (Button)findViewById(R.id.showDates);
+        showDates.setOnClickListener(showDatesOnClick);
     }
+
+    View.OnClickListener showDatesOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(EditOrDelete.this,SelectDate.class);
+            startActivity(intent);
+        }
+    };
+    View.OnClickListener addToDalyBtnOnCLick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(EditOrDelete.this,AddDailyProducts.class);
+            startActivity(intent);
+        }
+    };
     View.OnClickListener addBtnOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

@@ -43,14 +43,14 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Ilosc" />
+                android:text="Ilosc (100gram)" />
             <EditText
                 android:id="@+id/amount"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_x="192dp"
                 android:layout_y="257dp"
-
+                android:inputType="numberDecimal"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -71,7 +71,7 @@
                 android:layout_height="match_parent"
                 android:layout_x="192dp"
                 android:layout_y="257dp"
-
+                android:inputType="numberDecimal"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -91,7 +91,7 @@
                 android:layout_height="match_parent"
                 android:layout_x="192dp"
                 android:layout_y="257dp"
-
+                android:inputType="numberDecimal"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -111,7 +111,7 @@
                 android:layout_height="match_parent"
                 android:layout_x="192dp"
                 android:layout_y="257dp"
-
+                android:inputType="numberDecimal"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -131,7 +131,7 @@
                 android:layout_height="match_parent"
                 android:layout_x="192dp"
                 android:layout_y="257dp"
-
+                android:inputType="numberDecimal"
                 android:textSize="18sp" />
         </LinearLayout>
 

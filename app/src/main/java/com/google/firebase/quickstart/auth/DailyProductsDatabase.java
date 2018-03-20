@@ -1,10 +1,13 @@
 package com.google.firebase.quickstart.auth;
 
+import java.util.Date;
+
 /**
  * Created by linux on 14.03.18.
  */
 
-public class Produkt {
+public class DailyProductsDatabase {
+    public Date data;
     public String name;
     public double amount;
     public double protein;
@@ -12,10 +15,8 @@ public class Produkt {
     public double fat;
     public double kcal;
 
-    public Produkt(String name){
-        this.name = name;
-    }
-    public Produkt(String name, double amount, double protein, double carbs, double fat, double kcal) {
+    public DailyProductsDatabase(Date data, String name, double amount, double protein, double carbs, double fat, double kcal) {
+        this.data = data;
         this.name = name;
         this.amount = amount;
         this.protein = protein;
@@ -23,13 +24,13 @@ public class Produkt {
         this.fat = fat;
         this.kcal = kcal;
     }
-    public Produkt(double amount, double protein, double carbs, double fat, double kcal) {
 
-        this.amount = amount;
-        this.protein = protein;
-        this.carbs = carbs;
-        this.fat = fat;
-        this.kcal = kcal;
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 
     public String getName() {
