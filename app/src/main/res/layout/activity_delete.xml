@@ -4,17 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CCCCCC"
     tools:context="com.google.firebase.quickstart.auth.DeleteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
 
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme">
+
+        </android.support.v7.widget.Toolbar>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="80dp"
             android:weightSum="2">
 
             <LinearLayout
@@ -25,9 +38,9 @@
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:text="Podaj swój email:"
                     android:layout_marginTop="10dp"
                     android:textAlignment="center" />
@@ -35,9 +48,14 @@
                 <EditText
                     android:id="@+id/emailInput"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/customborder"
+                    android:gravity="top|center_horizontal"
+                    android:theme="@style/MyEditTextTheme"
                     android:hint="Email"
                     android:inputType="textEmailAddress" />
 
@@ -56,34 +74,40 @@
             android:textAlignment="center"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/takCheck"
-                android:layout_width="match_parent"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@drawable/customborder"
+                android:gravity="top|center_vertical|center_horizontal"
                 android:text="Tak" />
 
             <CheckBox
                 android:id="@+id/nieCheck"
-                android:layout_width="match_parent"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/customborder"
+                android:gravity="top|center_vertical|center_horizontal"
                 android:text="Nie" />
         </LinearLayout>
 
         <Button
             android:id="@+id/deleteBtn"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_marginTop="100dp"
-            android:text="Usuń konto" />
+            android:background="@drawable/custombuttonborder"
+            android:text="Usuń konto"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

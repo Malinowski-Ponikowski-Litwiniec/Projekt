@@ -1,8 +1,14 @@
 package com.google.firebase.quickstart.auth;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,14 +29,16 @@ public class EditOrDelete extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_or_delete);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
          editBtn = (Button)findViewById(R.id.editBtn);
          deleteBtn = (Button)findViewById(R.id.deleteBtn);
-         signOutBtn = (Button)findViewById(R.id.signOutBtn);
+
         addBtn = (Button)findViewById(R.id.addBtn);
         addBtn.setOnClickListener(addBtnOnClick);
          editBtn.setOnClickListener(editBtnOnClick);
          deleteBtn.setOnClickListener(deleteBtnOnClick);
-         signOutBtn.setOnClickListener(singOutBtnClick);
+         
         addToDalyBtn = (Button)findViewById(R.id.addToDalyBtn);
         addToDalyBtn.setOnClickListener(addToDalyBtnOnCLick);
         mAuth = FirebaseAuth.getInstance();
@@ -73,17 +81,46 @@ public class EditOrDelete extends AppCompatActivity {
             startActivity(intent);
         }
     };
-    View.OnClickListener singOutBtnClick = new View.OnClickListener () {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(EditOrDelete.this, "Wylogowano", Toast.LENGTH_SHORT).show();
-            mAuth.signOut();
-            updateUI();
-        }
-    };
+
 
     private void updateUI() {
         Intent intent = new Intent(this, EmailPasswordActivity.class);
         startActivity(intent);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.settings) {
+            Toast.makeText(EditOrDelete.this,"settings",Toast.LENGTH_SHORT).show();
+            return true;
+        }if(item.getItemId() == R.id.logOut){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Na pewno chcesz się wylogować?");
+            builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mAuth.signOut();
+                    Intent intent = new Intent(EditOrDelete.this,EmailPasswordActivity.class);
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            return true;
+        }
+
+        return false;
     }
 }

@@ -12,9 +12,10 @@ public class RealtimeDatabase {
     public DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
     public FirebaseAuth myRef = FirebaseAuth.getInstance();
 
-    public void setValue(CurrentUser value) {
-        CurrentUser user = new CurrentUser(value.getWiek(), value.getWaga(),value.getWzrost(), value.getActivity(), value.getSex());
+    public void setValue(CurrentUser value,UserMacro macro) {
+        CurrentUser user = new CurrentUser(value.getWiek(), value.getWaga(),value.getWzrost(), value.getActivity(), value.getSex(),value.getGoal());
         mDatabase.child(myRef.getUid()).setValue(user);
+        mDatabase.child(myRef.getUid()).child("macro").setValue(macro);
 
 
     }

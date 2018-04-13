@@ -1,136 +1,229 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CCCCCC"
+    tools:context="com.google.firebase.quickstart.auth.EditActivity">
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget0"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="110dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_x="30dp"
-        android:layout_y="60dp"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
-
-        <TextView
-            android:id="@+id/textViewAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_x="90dp"
-            android:layout_y="198dp"
-            android:text="Wiek:" />
-
-        <EditText
-            android:id="@+id/textEditAge"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_x="186dp"
-            android:layout_y="196dp"
-            android:textSize="18sp"
-            android:inputType="numberDecimal"/>
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
 
-        <TextView
-            android:id="@+id/textViewWeight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_x="46dp"
-            android:layout_y="143dp"
-            android:text="Obecna waga:" />
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme">
 
-        <EditText
-            android:id="@+id/textEditWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_x="189dp"
-            android:layout_y="136dp"
-            android:textSize="18sp"
-            android:inputType="numberDecimal"/>
+        </android.support.v7.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/textViewHeight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_x="75dp"
-            android:layout_y="249dp"
-            android:text="Wzrost:" />
-
-        <EditText
-            android:id="@+id/textEditHeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_x="192dp"
-            android:layout_y="257dp"
-            android:textSize="18sp"
-            android:inputType="numberDecimal"/>
-
-        <TextView
-            android:id="@+id/textViewActivityLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_x="0dp"
-            android:layout_y="309dp"
-            android:text="Poziom aktywności:" />
-
-        <Spinner
-            android:id="@+id/spinnerActivityLevel"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_x="194dp"
-            android:layout_y="327dp"
-            android:entries="@array/spinnerActivityLevel"/>
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textViewSex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_x="93dp"
-            android:layout_y="350dp"
-            android:text="Płeć:" />
+            <TextView
+                android:id="@+id/textViewAge"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Wiek"
+                android:textColor="@color/md_black_1000" />
+            <EditText
+                android:id="@+id/textEditAge"
+                android:layout_width="150dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:inputType="numberDecimal"
+                android:theme="@style/MyEditTextTheme"
+                android:textSize="18sp" />
 
-        <Spinner
-            android:id="@+id/spinnerSex"
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_x="186dp"
-            android:layout_y="366dp"
-            android:entries="@array/spinnerSex"/>
+            android:layout_marginTop="30dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewWeight"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Obecna waga"
+                android:textColor="@color/md_black_1000" />
+            <EditText
+                android:id="@+id/textEditWeight"
+                android:layout_width="150dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:inputType="numberDecimal"
+                android:theme="@style/MyEditTextTheme"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewHeight"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Wzrost"
+                android:textColor="@color/md_black_1000" />
+            <EditText
+                android:id="@+id/textEditHeight"
+                android:layout_width="150dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:inputType="numberDecimal"
+                android:theme="@style/MyEditTextTheme"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewActivityLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/md_black_1000"
+                android:text="Poziom aktywności:" />
+
+            <Spinner
+                android:id="@+id/spinnerActivityLevel"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:entries="@array/spinnerActivityLevel" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewSex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/md_black_1000"
+                android:text="Płeć:" />
+
+            <Spinner
+                android:id="@+id/spinnerSex"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:entries="@array/spinnerSex" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/md_black_1000"
+                android:text="Wybierz swój cel:" />
+            <Spinner
+                android:id="@+id/spinnerGoal"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:entries="@array/spinnerGoal"/>
+
+        </LinearLayout>
+
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:paddingTop="100dp">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="30dp">
 
             <Button
                 android:id="@+id/sendToDatabaseBtn"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:text="@string/send_to_database"
-                android:theme="@style/ThemeOverlay.MyDarkButton"
+                android:background="@drawable/custombuttonborder"
+                android:textColor="#FFFFFF"
                 android:visibility="visible" />
 
             <Button
                 android:id="@+id/btn"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
                 android:text="@string/sign_out"
-                android:theme="@style/ThemeOverlay.MyDarkButton" />
+                android:background="@drawable/custombuttonborder"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-</TableLayout>
+</android.support.constraint.ConstraintLayout>

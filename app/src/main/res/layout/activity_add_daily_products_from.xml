@@ -5,20 +5,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CCCCCC"
     tools:context="com.google.firebase.quickstart.auth.AddDailyProductsFrom">
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme">
+
+    </android.support.v7.widget.Toolbar>
+
 
         <TextView
             android:id="@+id/productName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center" />
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/md_black_1000"
+            android:textSize="22sp"
+            android:textAllCaps="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,111 +45,135 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/customborder"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Ilość w gramach"
-                    android:textAlignment="center" />
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Ilość (w gramach):"
+                    android:textColor="@color/md_black_1000" />
 
                 <EditText
                     android:id="@+id/amount"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="40dp"
                     android:inputType="numberDecimal"
+                    android:singleLine="true"
                     android:textAlignment="center"
-
-                    />
+                    android:theme="@style/MyEditTextTheme"
+                    android:textColor="#000000" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/customborder"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Węglowodany"
-                    android:textAlignment="center" />
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Węglowodany:"
+                    android:textColor="@color/md_black_1000" />
 
                 <TextView
                     android:id="@+id/carbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
+                    android:text=""
                     android:textAlignment="center" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:focusableInTouchMode="true"
+                android:background="@drawable/customborder"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Tłuszcze"
-                    android:textAlignment="center" />
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Tłuszcze:"
+                    android:textColor="@color/md_black_1000" />
 
                 <TextView
                     android:id="@+id/fat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
+                    android:text=""
                     android:textAlignment="center" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
                 android:focusableInTouchMode="true"
+                android:background="@drawable/customborder"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Białko"
-                    android:textAlignment="center" />
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Białko:"
+                    android:textColor="@color/md_black_1000" />
 
                 <TextView
                     android:id="@+id/protein"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
+                    android:text=""
                     android:textAlignment="center" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/customborder"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Kalorie"
-                    android:textAlignment="center" />
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Kalorie:"
+                    android:textColor="@color/md_black_1000"/>
 
                 <TextView
                     android:id="@+id/kcal"
@@ -146,11 +187,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
+                android:background="@drawable/customborder"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <CheckBox
                     android:id="@+id/sniadanie"
+                    android:theme="@style/checkBoxStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -158,13 +202,16 @@
 
                 <CheckBox
                     android:id="@+id/obiad"
+                    android:theme="@style/checkBoxStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Obiad" />
+                    android:text="Obiad"
+                    android:textColorLink="#039BE5" />
 
                 <CheckBox
                     android:id="@+id/kolacja"
+                    android:theme="@style/checkBoxStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -172,6 +219,7 @@
 
                 <CheckBox
                     android:id="@+id/przekaski"
+                    android:theme="@style/checkBoxStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -180,8 +228,13 @@
 
             <Button
                 android:id="@+id/dodajBtn"
-                android:layout_width="match_parent"
+                style="@style/FirebaseUI.Button"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/custombuttonborder"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
                 android:text="Dodaj" />
         </LinearLayout>
 

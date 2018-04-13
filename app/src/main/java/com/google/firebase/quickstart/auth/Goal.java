@@ -24,7 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.twitter.Regex;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,16 +34,20 @@ import java.util.regex.Pattern;
 public class Goal extends AppCompatActivity {
 
     public Button btn;
-    public FirebaseAuth mAuth;
+
     public EditText age;
     public EditText weight;
     public EditText height;
     public Spinner activity;
     public Spinner sex;
+    public Spinner goal;
     public Button sendToDatabaseBtn;
     public Button sendToDatabase;
     private FirebaseDatabase mFirebaseDatabase;
-
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public String dateFormat;
+    DatabaseReference myRef = database.getReference();
+    public FirebaseAuth mAuth = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,16 +62,19 @@ public class Goal extends AppCompatActivity {
         height = (EditText) findViewById(R.id.textEditHeight);
         activity = (Spinner) findViewById(R.id.spinnerActivityLevel);
         sex = (Spinner) findViewById(R.id.spinnerSex);
-        Toast.makeText(Goal.this,"witaj",Toast.LENGTH_SHORT).show();
+        goal = (Spinner)findViewById(R.id.spinnerGoal);
+        Date date = new Date();
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat = simpleDateFormat.format(date);
     }
 
 
     View.OnClickListener sendToDatabaseOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
 
+            Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
 
             String ageString = age.getText().toString();
             Matcher ageMatcher = pattern.matcher(ageString);
@@ -75,11 +84,13 @@ public class Goal extends AppCompatActivity {
             String heightString = height.getText().toString();
             Matcher heightMatcher = pattern.matcher(heightString);
 
+            myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("kcal").setValue(0.0);
+            myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("curMacro").setValue(new Produkt(0.0,0.0,0.0));
+           
             if (ageString.isEmpty() || weightString.isEmpty() || heightString.isEmpty()) {
                 Toast.makeText(Goal.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
             } else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
                 Toast.makeText(Goal.this, "Podaj poprawne dane", Toast.LENGTH_SHORT).show();
-
             } else if (Double.valueOf(ageString) > 150) {
                 Toast.makeText(Goal.this, "Podany wiek jest za wysoki", Toast.LENGTH_SHORT).show();
             } else if (Double.valueOf(weightString) > 300) {
@@ -88,12 +99,23 @@ public class Goal extends AppCompatActivity {
                 Toast.makeText(Goal.this, "Podany wzrost jest za duży", Toast.LENGTH_SHORT).show();
             } else {
                 CurrentUser user = new CurrentUser(age.getText().toString(), weight.getText().toString(),
-                        height.getText().toString(), activity.getSelectedItem().toString(), sex.getSelectedItem().toString());
+                        height.getText().toString(), activity.getSelectedItem().toString(), sex.getSelectedItem().toString(),goal.getSelectedItem().toString());
+
+                UserBmi bmi = new UserBmi();
+
+                user = bmi.calculateBmi(user);
+
+                UserMacro macro = bmi.calculateMacro(user);
+
                 RealtimeDatabase rd = new RealtimeDatabase();
-                rd.setValue(user);
+                rd.setValue(user,macro);
+
+
                 Toast.makeText(Goal.this, "Wysłano", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Goal.this, EditOrDelete.class);
+                Intent intent = new Intent(Goal.this, UserProfile.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+
             }
         }
     };
@@ -109,6 +131,8 @@ public class Goal extends AppCompatActivity {
         Intent intent = new Intent(this, EmailPasswordActivity.class);
         startActivity(intent);
     }
+
+    ;
 
 
 }

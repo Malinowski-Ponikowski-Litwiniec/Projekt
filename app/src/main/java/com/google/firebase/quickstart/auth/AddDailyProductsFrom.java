@@ -1,16 +1,21 @@
 package com.google.firebase.quickstart.auth;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
+import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,11 +23,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +58,7 @@ public class AddDailyProductsFrom extends AppCompatActivity {
     Double productProteinTemp;
     Double productKcalTemp;
 
-    Double productAmountTemp ;
+    Double productAmountTemp;
 
     Button dodajBtn;
 
@@ -60,19 +74,37 @@ public class AddDailyProductsFrom extends AppCompatActivity {
     CheckBox przekaski;
 
     String chooser;
-
+    Toolbar myToolbar;
     public String dateFormat;
+    public String name;
+    public Map<String, String> map = new HashMap<>();
+    public DatabaseReference kcalRef;
+    public DatabaseReference macroRef;
+    public DatabaseReference testRef;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_daily_products_from);
-
+        myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        createDrawer();
         Date date = new Date();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat = simpleDateFormat.format(date);
 
-        dodajBtn = (Button)findViewById(R.id.dodajBtn);
+        //ustawie referencji
+        kcalRef = myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("kcal");
+        macroRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("curMacro");
+        testRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("sniadanie");
+        testRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("obiad");
+        testRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("kolacja");
+        testRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("przekaski");
+
+
+        dodajBtn = (Button) findViewById(R.id.dodajBtn);
 
         productName = (TextView) findViewById(R.id.productName);
 
@@ -80,7 +112,7 @@ public class AddDailyProductsFrom extends AppCompatActivity {
         productFat = (TextView) findViewById(R.id.fat);
         productProtein = (TextView) findViewById(R.id.protein);
         productAmount = (EditText) findViewById(R.id.amount);
-        productKcal = (TextView)findViewById(R.id.kcal);
+        productKcal = (TextView) findViewById(R.id.kcal);
 
         sniadanie = (CheckBox) findViewById(R.id.sniadanie);
         obiad = (CheckBox) findViewById(R.id.obiad);
@@ -95,10 +127,276 @@ public class AddDailyProductsFrom extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        name = intent.getStringExtra("name");
         productName.setText(name);
 
-        Map<String, String> map = new HashMap<>();
+
+        getFromDatabase();
+
+        //zdarzenie po zabraniu "focusu" z EditText(ilości produktu)
+        productAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    productAmount.setText("");
+                } else {
+                    if (productAmount.getText().toString().isEmpty()) {
+                        productAmount.setText("100");
+                    }
+
+
+                    productResultAmount = productAmountTemp;
+                    productResultCarbs = productCarbsTemp * productAmountTemp;
+                    productResultFat = productFatTemp * productAmountTemp;
+                    productResultProtein = productProteinTemp * productAmountTemp;
+                    productResultKcal = productKcalTemp * productAmountTemp;
+
+                    productCarbs.setText(String.valueOf(productResultCarbs));
+                    productFat.setText(String.valueOf(productResultFat));
+                    productProtein.setText(String.valueOf(productResultProtein));
+                    productKcal.setText(String.valueOf(productResultKcal));
+
+
+                }
+            }
+        });
+
+
+        //zdarzenie po naciśnięciu na "Dodaj"
+        dodajBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (productAmount.getText().toString().isEmpty()) {
+                    Toast.makeText(AddDailyProductsFrom.this, "Ilość nie może być pusta!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (sniadanie.isChecked() || obiad.isChecked() || kolacja.isChecked() || przekaski.isChecked()) {
+                        productAmountTemp = Double.valueOf(productAmount.getText().toString()) / 100;
+
+
+                        productResultAmount = productAmountTemp;
+                        productResultCarbs = productCarbsTemp * productAmountTemp;
+                        productResultFat = productFatTemp * productAmountTemp;
+                        productResultProtein = productProteinTemp * productAmountTemp;
+                        productResultKcal = productKcalTemp * productAmountTemp;
+
+                        //ustawienie dwóch miejsc po przecinku w wyniku
+                        productResultAmount = BigDecimal.valueOf(productResultAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                        productResultCarbs = BigDecimal.valueOf(productResultCarbs).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                        productResultFat = BigDecimal.valueOf(productResultFat).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                        productResultProtein = BigDecimal.valueOf(productResultProtein).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                        productResultKcal = BigDecimal.valueOf(productResultKcal).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+                        //utworzenie obiektu z końcowymi wartościami
+                        Produkt produkt = new Produkt(productResultAmount, productResultProtein, productResultCarbs, productResultFat, productResultKcal);
+
+
+                        //dodanie wybranego produktu do bazy
+                        myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child(chooser).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                //myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).setValue(chooser);
+                                //  myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child(chooser).setValue(name);
+                                myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child(chooser).child(name).setValue(produkt);
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        setKcal();
+
+                        //powrót do Profil Użytkownika
+                        Intent intent = new Intent(AddDailyProductsFrom.this, UserProfile.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+
+                    } else {
+
+                        Toast.makeText(AddDailyProductsFrom.this, "Zaznacz jakąś opcje ", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+            }
+
+        });
+
+
+    }
+
+    //ustwaienie sumy kalorii w bazie oraz skladników
+    public void setKcal() {
+
+        //obliczenie sumy macro i kcal
+        myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("sniadanie").addValueEventListener(new ValueEventListener() {
+            Map<String, Produkt> map = new HashMap<>();
+            double curKcal = 0;
+            double curProtein = 0;
+            double curCarbs = 0;
+            double curFat = 0;
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                    map.put(noteDataSnapshot.getKey(), new Produkt(noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                            noteDataSnapshot.getValue(Produkt.class).getCarbs(),
+                            noteDataSnapshot.getValue(Produkt.class).getFat(),
+                            noteDataSnapshot.getValue(Produkt.class).getKcal()));
+
+                }
+                for (Map.Entry<String, Produkt> entry : map.entrySet()) {
+                    curKcal += entry.getValue().getKcal();
+                    curProtein += entry.getValue().getProtein();
+                    curCarbs += entry.getValue().getCarbs();
+                    curFat += entry.getValue().getFat();
+
+                }
+                //obliczenie sumy macro i kcal
+                myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("obiad").addValueEventListener(new ValueEventListener() {
+                    Map<String, Produkt> map = new HashMap<>();
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                            map.put(noteDataSnapshot.getKey(), new Produkt(noteDataSnapshot.getValue(Produkt.class).getKcal(),
+                                    noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                                    noteDataSnapshot.getValue(Produkt.class).getCarbs(),
+                                    noteDataSnapshot.getValue(Produkt.class).getFat()));
+
+                        }
+                        for (Map.Entry<String, Produkt> entry : map.entrySet()) {
+                            curKcal += entry.getValue().getKcal();
+                            curProtein += entry.getValue().getProtein();
+                            curCarbs += entry.getValue().getCarbs();
+                            curFat += entry.getValue().getFat();
+
+                        }
+                        //obliczenie sumy macro i kcal w śniadaniu
+                        myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("kolacja").addValueEventListener(new ValueEventListener() {
+                            Map<String, Produkt> map = new HashMap<>();
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                                    map.put(noteDataSnapshot.getKey(), new Produkt(noteDataSnapshot.getValue(Produkt.class).getKcal(),
+                                            noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                                            noteDataSnapshot.getValue(Produkt.class).getCarbs(),
+                                            noteDataSnapshot.getValue(Produkt.class).getFat()));
+
+                                }
+                                for (Map.Entry<String, Produkt> entry : map.entrySet()) {
+                                    curKcal += entry.getValue().getKcal();
+                                    curProtein += entry.getValue().getProtein();
+                                    curCarbs += entry.getValue().getCarbs();
+                                    curFat += entry.getValue().getFat();
+
+                                }
+                                //obliczenie sumy macro i kcal w śniadaniu
+                                myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("przekaski").addValueEventListener(new ValueEventListener() {
+                                    Map<String, Produkt> map = new HashMap<>();
+
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                                            map.put(noteDataSnapshot.getKey(), new Produkt(noteDataSnapshot.getValue(Produkt.class).getKcal(),
+                                                    noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                                                    noteDataSnapshot.getValue(Produkt.class).getCarbs(),
+                                                    noteDataSnapshot.getValue(Produkt.class).getFat()));
+
+                                        }
+                                        for (Map.Entry<String, Produkt> entry : map.entrySet()) {
+                                            curKcal += entry.getValue().getKcal();
+                                            curProtein += entry.getValue().getProtein();
+                                            curCarbs += entry.getValue().getCarbs();
+                                            curFat += entry.getValue().getFat();
+
+                                        }
+                                        kcalRef.setValue(BigDecimal.valueOf(curKcal).setScale(2, RoundingMode.HALF_UP).doubleValue());
+                                        Produkt produkt = new Produkt(curProtein, curCarbs, curFat);
+                                        macroRef.setValue(produkt);
+                                        System.out.println(produkt.getProtein() + " ----------- " + produkt.getCarbs() + " _---------- " + produkt.getFat());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+    }
+
+
+    //walidacja zaznaczania checkBoxów
+    View.OnClickListener onRadioButtonClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.sniadanie:
+                    obiad.setChecked(false);
+                    kolacja.setChecked(false);
+                    przekaski.setChecked(false);
+                    chooser = "sniadanie";
+                    break;
+                case R.id.obiad:
+                    sniadanie.setChecked(false);
+                    kolacja.setChecked(false);
+                    przekaski.setChecked(false);
+                    chooser = "obiad";
+                    break;
+                case R.id.kolacja:
+                    obiad.setChecked(false);
+                    sniadanie.setChecked(false);
+                    przekaski.setChecked(false);
+                    chooser = "kolacja";
+                    break;
+                case R.id.przekaski:
+                    obiad.setChecked(false);
+                    kolacja.setChecked(false);
+                    sniadanie.setChecked(false);
+                    chooser = "przekaski";
+                    break;
+                default:
+                    break;
+
+            }
+        }
+    };
+
+
+    //pobranie z bazy ilosc składników w danym produkcie
+    public void getFromDatabase() {
         myRef.child("produkty").child(name).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -136,130 +434,117 @@ public class AddDailyProductsFrom extends AppCompatActivity {
             }
 
         });
-        productAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    productAmount.setText("");
-                }else{
-                    if(productAmount.getText().toString().isEmpty()){
-                        productAmount.setText("100");
-                    }
-                   productAmountTemp = Double.valueOf(productAmount.getText().toString())/100;
+    }
 
-                    DecimalFormat decimalFormat = new DecimalFormat(".##");
 
-                    productResultAmount = Double.valueOf(decimalFormat.format(productAmountTemp));
-                    productResultCarbs = Double.valueOf(decimalFormat.format(productCarbsTemp*productAmountTemp));
-                    productResultFat = Double.valueOf(decimalFormat.format(productFatTemp*productAmountTemp));
-                    productResultProtein = Double.valueOf(decimalFormat.format(productProteinTemp*productAmountTemp));
-                    productResultKcal = Double.valueOf(decimalFormat.format(productKcalTemp*productAmountTemp));
+    //ustawienie trzech kropeczek
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    //ustawienie zdarzenia po wybraniu opcji w trzech kropeczkach
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-                    productCarbs.setText(String.valueOf(productResultCarbs));
-                    productFat.setText(String.valueOf(productResultFat));
-                    productProtein.setText(String.valueOf(productResultProtein));
-                    productKcal.setText(String.valueOf(productResultKcal));
-
+        if (item.getItemId() == R.id.settings) {
+            Toast.makeText(AddDailyProductsFrom.this, "settings", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.logOut) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Na pewno chcesz się wylogować?");
+            builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mAuth.signOut();
+                    Intent intent = new Intent(AddDailyProductsFrom.this, EmailPasswordActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
                 }
-            }
-        });
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            return true;
+        }
+
+        return false;
+    }
+
+    //menu z lewej strony
+    public void createDrawer() {
+
+        PrimaryDrawerItem menu = new PrimaryDrawerItem().withIdentifier(1).withName("Menu").withSelectable(false);
+        SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
+        SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
+        SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
+        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj produkt do dziennej listy");
+        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj aktywność do dziennej listy");
 
 
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(android.R.drawable.dark_header)
+                .addProfiles(
+                        new ProfileDrawerItem().withName(mAuth.getCurrentUser().getEmail()).withIcon(getResources().getDrawable(R.drawable.andrzej))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+        Drawer result = new DrawerBuilder()
+                .withAccountHeader(headerResult)
+                .withActivity(this)
+                .withToolbar(myToolbar)
+                .withDrawerLayout(R.layout.drawer_layout)
 
+                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        System.out.println("position +++++++++++++++++++++ " + position);
 
-
-        dodajBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (productAmount.getText().toString().isEmpty()) {
-                    Toast.makeText(AddDailyProductsFrom.this,"Ilość nie może być pusta!",Toast.LENGTH_SHORT).show();
-                } else {
-                    if (sniadanie.isChecked() || obiad.isChecked() || kolacja.isChecked() || przekaski.isChecked()) {
-                        productAmountTemp = Double.valueOf(productAmount.getText().toString())/100;
-
-                        DecimalFormat decimalFormat = new DecimalFormat(".##");
-
-                        productResultAmount = Double.valueOf(decimalFormat.format(productAmountTemp));
-                        productResultCarbs = Double.valueOf(decimalFormat.format(productCarbsTemp * productAmountTemp));
-                        productResultFat = Double.valueOf(decimalFormat.format(productFatTemp * productAmountTemp));
-                        productResultProtein = Double.valueOf(decimalFormat.format(productProteinTemp * productAmountTemp));
-                        productResultKcal = Double.valueOf(decimalFormat.format(productKcalTemp * productAmountTemp));
-
-
-                        Produkt produkt = new Produkt(productResultAmount, productResultProtein, productResultCarbs, productResultFat, productResultKcal);
-
-
-
-                        if(myRef.child("lista").child(mAuth.getCurrentUser().getUid()) == null){
-                            myRef.child("lista").setValue(mAuth.getCurrentUser().getUid());
-                        }
-
-                        if (myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat) == null) {
-                            myRef.child("lista").setValue(dateFormat);
-
-                        }
-
-                        if (myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child(chooser) != null) {
-                            if (myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child(chooser).child(name) != null) {
-                                myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child(chooser).child(name).setValue(produkt);
-                                Toast.makeText(AddDailyProductsFrom.this, "Dodano", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(AddDailyProductsFrom.this, EditOrDelete.class);
+                        Intent intent;
+                        switch (position) {
+                            case 1:
+                                break;
+                            case 2:
+                                intent = new Intent(AddDailyProductsFrom.this, UserProfile.class);
                                 startActivity(intent);
-                            }
-                        } else {
-                            myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).setValue(chooser);
-                            myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child(chooser).setValue(name);
-                            myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child(chooser).child(name).setValue(produkt);
-                            Toast.makeText(AddDailyProductsFrom.this, "Dodano", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(AddDailyProductsFrom.this, EditOrDelete.class);
-                            startActivity(intent);
+                                break;
+                            case 3:
 
+                                intent = new Intent(AddDailyProductsFrom.this, EditActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 4:
+                                intent = new Intent(AddDailyProductsFrom.this, AddProductToDatabase.class);
+                                startActivity(intent);
+                                break;
+                            case 5:
+                                intent = new Intent(AddDailyProductsFrom.this, AddDailyProducts.class);
+                                startActivity(intent);
+                                break;
+                            case 6:
+                                intent = new Intent(AddDailyProductsFrom.this, AddDailyActivity.class);
+                                startActivity(intent);
+                            default:
+                                break;
                         }
-                    } else {
-
-                        Toast.makeText(AddDailyProductsFrom.this, "Zaznacz jakąś opcje ", Toast.LENGTH_SHORT).show();
+                        return true;
                     }
+                }).build();
 
-                }
-            }
-
-        });
 
     }
-    View.OnClickListener onRadioButtonClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.sniadanie:
-                    obiad.setChecked(false);
-                    kolacja.setChecked(false);
-                    przekaski.setChecked(false);
-                    chooser = "sniadanie";
-                    break;
-                case R.id.obiad:
-                    sniadanie.setChecked(false);
-                    kolacja.setChecked(false);
-                    przekaski.setChecked(false);
-                    chooser = "obiad";
-                    break;
-                case R.id.kolacja:
-                    obiad.setChecked(false);
-                    sniadanie.setChecked(false);
-                    przekaski.setChecked(false);
-                    chooser = "kolacja";
-                    break;
-                case R.id.przekaski:
-                    obiad.setChecked(false);
-                    kolacja.setChecked(false);
-                    sniadanie.setChecked(false);
-                    chooser = "przekaski";
-                    break;
-                default:
-                    break;
-
-            }
-        }
-    };
-
 }

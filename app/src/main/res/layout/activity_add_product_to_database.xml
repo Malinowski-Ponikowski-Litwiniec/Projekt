@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CCCCCC"
     tools:context="com.google.firebase.quickstart.auth.AddProductToDatabase">
 
     <LinearLayout
@@ -12,24 +13,41 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
 
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme">
+
+        </android.support.v7.widget.Toolbar>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:text="Nazwa produktu" />
+                android:gravity="center"
+                android:text="Nazwa produktu"
+                android:textColor="@color/md_black_1000" />
             <EditText
                 android:id="@+id/name"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
+                android:gravity="center"
+                android:singleLine="true"
                 android:layout_height="match_parent"
-                android:layout_x="192dp"
-                android:layout_y="257dp"
-
+                android:layout_marginLeft="40dp"
+                android:theme="@style/MyEditTextTheme"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -37,20 +55,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:text="Ilosc (100gram)" />
+                android:gravity="center"
+                android:text="Ilość (w gramach)"
+                android:textColor="@color/md_black_1000" />
             <EditText
                 android:id="@+id/amount"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center"
+                android:singleLine="true"
                 android:layout_height="match_parent"
-                android:layout_x="192dp"
-                android:layout_y="257dp"
                 android:inputType="numberDecimal"
+                android:theme="@style/MyEditTextTheme"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -58,88 +84,126 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView5"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:text="Białko" />
+                android:gravity="center"
+                android:text="Białko"
+                android:textColor="@color/md_black_1000" />
             <EditText
                 android:id="@+id/protein"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_x="192dp"
-                android:layout_y="257dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center"
+                android:singleLine="true"
                 android:inputType="numberDecimal"
+                android:theme="@style/MyEditTextTheme"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:text="Węglowodany" />
+                android:gravity="center"
+                android:text="Węglowodany"
+                android:textColor="@color/md_black_1000" />
             <EditText
                 android:id="@+id/carbs"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_x="192dp"
-                android:layout_y="257dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center"
+                android:singleLine="true"
                 android:inputType="numberDecimal"
+                android:theme="@style/MyEditTextTheme"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView7"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:text="Tłuszcz" />
+                android:gravity="center"
+                android:text="Tłuszcz"
+                android:textColor="@color/md_black_1000" />
             <EditText
                 android:id="@+id/fat"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_x="192dp"
-                android:layout_y="257dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center"
+                android:singleLine="true"
                 android:inputType="numberDecimal"
+                android:theme="@style/MyEditTextTheme"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/customborder"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:text="kcal" />
+                android:gravity="center"
+                android:text="kcal"
+                android:textColor="@color/md_black_1000" />
             <EditText
                 android:id="@+id/kcal"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_x="192dp"
-                android:layout_y="257dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center"
+                android:singleLine="true"
                 android:inputType="numberDecimal"
+                android:layout_marginRight="10dp"
+                android:theme="@style/MyEditTextTheme"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/send"
-            android:layout_width="match_parent"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Wyślij" />
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:text="Wyślij"
+            android:background="@drawable/custombuttonborder"   />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

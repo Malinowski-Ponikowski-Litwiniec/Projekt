@@ -6,12 +6,24 @@
     android:layout_height="match_parent"
     tools:context="com.google.firebase.quickstart.auth.EditOrDelete">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/AppTheme"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="8dp"
+        android:layout_marginTop="50dp">
 
         <Button
             android:id="@+id/deleteBtn"
@@ -40,12 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pokaz wybrane produkty z danego dnia" />
-        <Button
-            android:id="@+id/signOutBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Wyloguj się" />
+
 
 
     </LinearLayout>

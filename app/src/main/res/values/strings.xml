@@ -58,5 +58,10 @@
         <item>kobieta</item>
         <item>mężczyzna</item>
     </string-array>
+    <string-array name="spinnerGoal">
+        <item>schudnąć</item>
+        <item>utrzymać wagę</item>
+        <item>przybrać na wadze</item>
+    </string-array>
     <string name="title_activity_edit_profile">EditProfile</string>
 </resources>
