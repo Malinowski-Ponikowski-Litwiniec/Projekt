@@ -1,12 +1,12 @@
 /**
  * Copyright 2016 Google Inc. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +42,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
 public class EmailPasswordActivity extends BaseActivity implements
         View.OnClickListener {
 
@@ -57,8 +60,11 @@ public class EmailPasswordActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emailpassword);
 
-
-
+        // Zmiana koloru status bara
+        Window window = EmailPasswordActivity.this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(EmailPasswordActivity.this.getResources().getColor(R.color.grey_dark));
 
         mEmailField = findViewById(R.id.field_email);
         mPasswordField = findViewById(R.id.field_password);
@@ -80,8 +86,8 @@ public class EmailPasswordActivity extends BaseActivity implements
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        updateUI(currentUser);
     }
     // [END on_start_check_user]
 
@@ -101,7 +107,6 @@ public class EmailPasswordActivity extends BaseActivity implements
                         if (task.isSuccessful()) {
 
 
-
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -114,7 +119,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                                             }
                                         }
                                     });
-                            Intent intent = new Intent(EmailPasswordActivity.this,Goal.class);
+                            Intent intent = new Intent(EmailPasswordActivity.this, Goal.class);
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -153,7 +158,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            updateUI(user);
-                            Intent intent = new Intent(EmailPasswordActivity.this,UserProfile.class);
+                            Intent intent = new Intent(EmailPasswordActivity.this, UserProfile.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                             startActivity(intent);
@@ -241,13 +246,12 @@ public class EmailPasswordActivity extends BaseActivity implements
             Intent intent = new Intent(this, Goal.class);
 
 
-            intent.putExtra("auth",String.valueOf(mAuth));
+            intent.putExtra("auth", String.valueOf(mAuth));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
 
         } else {
-
 
 
             findViewById(R.id.email_password_buttons).setVisibility(View.VISIBLE);
@@ -265,12 +269,9 @@ public class EmailPasswordActivity extends BaseActivity implements
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
 
 
-
-              //TO BYLO NIEPOTRZEBNE
+            //TO BYLO NIEPOTRZEBNE
 //            Intent intent = new Intent(this,EditOrDelete.class);
 //            startActivity(intent);
-
-
 
 
         } else if (i == R.id.sign_out_button) {
@@ -279,7 +280,6 @@ public class EmailPasswordActivity extends BaseActivity implements
             sendEmailVerification();
         }
     }
-
 
 
 }

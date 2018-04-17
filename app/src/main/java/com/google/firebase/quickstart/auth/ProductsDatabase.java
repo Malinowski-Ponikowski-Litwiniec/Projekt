@@ -22,7 +22,7 @@ public class ProductsDatabase {
     public FirebaseAuth myRef = FirebaseAuth.getInstance();
 
     public void sendProdukt(Produkt value){
-        Produkt produkt = new Produkt(value.getAmount(),value.getProtein(),value.getCarbs(),value.getFat(),value.getKcal());
+        Produkt produkt = new Produkt("",value.getAmount(),value.getProtein(),value.getCarbs(),value.getFat(),value.getKcal());
         mDatabase.child(value.getName()).setValue(produkt);
     }
 }

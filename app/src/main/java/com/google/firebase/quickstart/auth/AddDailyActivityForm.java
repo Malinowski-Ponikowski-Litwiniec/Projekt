@@ -57,6 +57,9 @@ public class AddDailyActivityForm extends AppCompatActivity {
     public Double resultKcal;
 
     public DatabaseReference activitiesRef;
+
+
+    public Double burnedKcal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +85,7 @@ public class AddDailyActivityForm extends AppCompatActivity {
         sendBtn = (Button) findViewById(R.id.dodajBtn);
         sendBtn.setOnClickListener(sendBtnListener);
 
-activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("aktywnosc");
+        activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("aktywnosc");
     }
 
     View.OnClickListener sendBtnListener = new View.OnClickListener() {
@@ -98,39 +101,47 @@ activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).chi
 
                     } else {
                         Double userTime = Double.valueOf(String.valueOf(time.getText()));
-                        if (userTime <= 60) {
 
-                            double comma = (Double.valueOf(String.valueOf(time.getText()))/60) * Double.valueOf(String.valueOf(dataSnapshot.getValue()));
-                            int result = (int)(comma);
+
+
+                        if (userTime <= 60) {
+                            double comma = (Double.valueOf(String.valueOf(time.getText())) / 60) * Double.valueOf(String.valueOf(dataSnapshot.getValue()));
+                            int result = (int) (comma);
                             kcal.setText(String.valueOf(result));
                             UserActivities userActivities = new UserActivities(Double.valueOf(result),userTime);
                             activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("aktywnosc").child(name);
 
                             activitiesRef.setValue(userActivities);
-                            Toast.makeText(AddDailyActivityForm.this, "wyslano", Toast.LENGTH_SHORT).show();
+
+                            setBurnKcal();
+                            setCurrentKcal();
+
+                            Toast.makeText(AddDailyActivityForm.this, "Dodano aktywność", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(AddDailyActivityForm.this, UserProfile.class);
+                            startActivity(intent);
                         } else {
-
-
                             double whole = Double.valueOf(Integer.valueOf(String.valueOf(time.getText())) / 60);
 
                             double comma = Double.valueOf(String.valueOf(time.getText())) - (60 * whole);
                             if (comma <= 0) {
 
-
                             } else {
-                                comma = (comma/60) * Double.valueOf(String.valueOf(dataSnapshot.getValue()));
+                                comma = (comma / 60) * Double.valueOf(String.valueOf(dataSnapshot.getValue()));
                             }
 
                             whole = whole * Double.valueOf(String.valueOf(dataSnapshot.getValue()));
 
-                            int result =(int)(comma + whole);
-                            UserActivities userActivities = new UserActivities(Double.valueOf(result),userTime);
+                            int result = (int) (comma + whole);
+                            UserActivities userActivities = new UserActivities(Double.valueOf(result), userTime);
                             activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("aktywnosc").child(name);
                             activitiesRef.setValue(userActivities);
-                            Toast.makeText(AddDailyActivityForm.this, "wyslano", Toast.LENGTH_SHORT).show();
 
+                            Toast.makeText(AddDailyActivityForm.this, "Dodano aktywność", Toast.LENGTH_SHORT).show();
                             kcal.setText(String.valueOf(result));
-
+                    setBurnKcal();
+                    setCurrentKcal();
+                            Intent intent = new Intent(AddDailyActivityForm.this, UserProfile.class);
+                            startActivity(intent);
 
                         }
                     }
@@ -145,7 +156,50 @@ activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).chi
         }
     };
 
+public void setBurnKcal(){
+  burnedKcal =0.0;
+    myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("aktywnosc").addValueEventListener(new ValueEventListener() {
+        Map<String,UserActivities> map = new HashMap<>();
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                map.put(noteDataSnapshot.getKey(),new UserActivities(noteDataSnapshot.getValue(UserActivities.class).getKcal(),
+                        noteDataSnapshot.getValue(UserActivities.class).getTime()));
+            }
+            for(Map.Entry<String, UserActivities> entry : map.entrySet()){
 
+                    burnedKcal+= entry.getValue().getKcal();
+
+            }
+            myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("burnedAndKcal").child("burnedKcal").setValue(burnedKcal);
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    });
+}
+
+public void setCurrentKcal(){
+    myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("burnedAndKcal").addValueEventListener(new ValueEventListener() {
+        Map<String,Double> map = new HashMap<>();
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()){
+                map.put(noteDataSnapshot.getKey(),Double.valueOf(String.valueOf(noteDataSnapshot.getValue())));
+            }
+            double currentKcal = map.get("kcal") - map.get("burnedKcal");
+            myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("kcal").setValue(BigDecimal.valueOf(Double.valueOf(currentKcal)).setScale(1, RoundingMode.HALF_UP).doubleValue());
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    });
+}
     //ustawienie trzech kropeczek
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -195,8 +249,10 @@ activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).chi
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
         SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
+        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
+        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -218,7 +274,7 @@ activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).chi
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajDoDziennejListy, dodajDoDziennejListyAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajAktywnoscDoBazy, dodajDoDziennejListy, dodajDoDziennejListyAktywnosc, edytujAktywnosc)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -241,12 +297,22 @@ activitiesRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).chi
                                 intent = new Intent(AddDailyActivityForm.this, AddProductToDatabase.class);
                                 startActivity(intent);
                                 break;
+
                             case 5:
+                                intent = new Intent(AddDailyActivityForm.this, AddActivityToDatabase.class);
+                                startActivity(intent);
+                                break;
+
+                            case 6:
                                 intent = new Intent(AddDailyActivityForm.this, AddDailyProducts.class);
                                 startActivity(intent);
                                 break;
-                            case 6:
+                            case 7:
                                 intent = new Intent(AddDailyActivityForm.this, AddDailyActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 8:
+                                intent = new Intent(AddDailyActivityForm.this, EditAddedActivity.class);
                                 startActivity(intent);
                             default:
                                 break;

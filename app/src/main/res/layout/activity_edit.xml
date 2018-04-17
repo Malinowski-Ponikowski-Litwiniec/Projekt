@@ -4,225 +4,214 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CCCCCC"
     tools:context="com.google.firebase.quickstart.auth.EditActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/gradient4_edit" >
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:popupTheme="@style/AppTheme" >
 
-            android:theme="@style/AppTheme"
-            app:popupTheme="@style/AppTheme">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edytuj profil"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
 
         </android.support.v7.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/customborder"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewAge"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
                 android:gravity="center"
-                android:text="Wiek"
-                android:textColor="@color/md_black_1000" />
+                android:text="Wiek:"
+                android:textColor="@color/text_white" />
+
             <EditText
                 android:id="@+id/textEditAge"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
+                android:layout_height="45dp"
                 android:gravity="center"
                 android:singleLine="true"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:inputType="numberDecimal"
-                android:theme="@style/MyEditTextTheme"
+                android:textColor="@color/text_black"
+                android:background="@drawable/textfield_white"
                 android:textSize="18sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/customborder"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="horizontal">
+            android:layout_height="80dp"
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/textViewWeight"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
                 android:gravity="center"
-                android:text="Obecna waga"
-                android:textColor="@color/md_black_1000" />
+                android:text="Obecna waga:"
+                android:textColor="@color/text_white" />
+
             <EditText
                 android:id="@+id/textEditWeight"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
+                android:layout_height="45dp"
                 android:gravity="center"
                 android:singleLine="true"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:inputType="numberDecimal"
-                android:theme="@style/MyEditTextTheme"
+                android:background="@drawable/textfield_white"
                 android:textSize="18sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/customborder"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="horizontal">
+            android:layout_height="70dp"
+            >
 
             <TextView
                 android:id="@+id/textViewHeight"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
                 android:gravity="center"
-                android:text="Wzrost"
-                android:textColor="@color/md_black_1000" />
+                android:text="Wzrost:"
+                android:textColor="@color/text_white" />
+
             <EditText
                 android:id="@+id/textEditHeight"
-                android:layout_width="150dp"
+                android:layout_width="180dp"
+                android:layout_height="45dp"
                 android:gravity="center"
                 android:singleLine="true"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:inputType="numberDecimal"
-                android:theme="@style/MyEditTextTheme"
+                android:background="@drawable/textfield_white"
                 android:textSize="18sp" />
 
         </LinearLayout>
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/imageView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/customborder"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
+            app:srcCompat="@drawable/textline" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp" >
 
             <TextView
                 android:id="@+id/textViewActivityLevel"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_gravity="center"
-                android:textColor="@color/md_black_1000"
+                android:gravity="center"
+                android:textColor="@color/text_white"
                 android:text="Poziom aktywności:" />
 
             <Spinner
                 android:id="@+id/spinnerActivityLevel"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="45dp"
                 android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/spinner_white"
                 android:entries="@array/spinnerActivityLevel" />
 
         </LinearLayout>
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/customborder"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="60dp" >
 
-        <TextView
-            android:id="@+id/textViewSex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/md_black_1000"
-            android:text="Płeć:" />
+            <TextView
+                android:id="@+id/textViewSex"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:textColor="@color/text_white"
+                android:text="Płeć:" />
 
-        <Spinner
-            android:id="@+id/spinnerSex"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center"
-            android:entries="@array/spinnerSex" />
+            <Spinner
+                android:id="@+id/spinnerSex"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="45dp"
+                android:background="@drawable/spinner_white"
+                android:layout_gravity="center"
+                android:entries="@array/spinnerSex" />
 
-    </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/customborder"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
+            android:layout_height="60dp" >
 
             <TextView
                 android:id="@+id/textViewGoal"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/md_black_1000"
-                android:text="Wybierz swój cel:" />
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="Wybierz swój cel:"
+                android:textColor="@color/text_white" />
+
             <Spinner
                 android:id="@+id/spinnerGoal"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="45dp"
                 android:layout_gravity="center"
+                android:background="@drawable/spinner_white"
                 android:entries="@array/spinnerGoal"/>
 
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
+            <Button
+                android:id="@+id/sendToDatabaseBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
+                android:background="@drawable/custombuttonborder"
                 android:gravity="center"
-                android:paddingTop="30dp">
+                android:text="@string/send_to_database"
+                android:textColor="#FFFFFF" />
 
-                <Button
-                    android:id="@+id/sendToDatabaseBtn"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/send_to_database"
-                    android:background="@drawable/custombuttonborder"
-                    android:textColor="#FFFFFF"
-                    android:visibility="visible" />
-
-                <Button
-                    android:id="@+id/btn"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
-                    android:gravity="center"
-                    android:text="@string/sign_out"
-                    android:background="@drawable/custombuttonborder"
-                    android:textColor="#FFFFFF" />
-
-            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

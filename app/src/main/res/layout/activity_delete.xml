@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CCCCCC"
+    android:background="@drawable/gradient4_edit"
     tools:context="com.google.firebase.quickstart.auth.DeleteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="650dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -21,19 +24,28 @@
             android:theme="@style/AppTheme"
             app:popupTheme="@style/AppTheme">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Usuwanie konta"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+
         </android.support.v7.widget.Toolbar>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp"
             android:layout_marginBottom="80dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
             android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -41,23 +53,24 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Podaj swój email:"
                     android:layout_marginTop="10dp"
-                    android:textAlignment="center" />
+                    android:text="Podaj swój email:"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_white" />
 
                 <EditText
                     android:id="@+id/emailInput"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/customborder"
-                    android:gravity="top|center_horizontal"
-                    android:theme="@style/MyEditTextTheme"
+                    android:background="@drawable/textfield_white"
+                    android:gravity="center_horizontal|center_vertical"
                     android:hint="Email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textSize="18dp"
+                    android:theme="@style/MyEditTextTheme" />
 
             </LinearLayout>
 
@@ -67,47 +80,37 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="10dp"
+            android:layout_marginTop="50dp"
             android:layout_weight="1"
             android:text="Na pewno chcesz usunąć konto?"
-            android:layout_marginTop="50dp"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/text_white"
+            android:textSize="18dp" />
 
-        <LinearLayout
-            android:layout_width="250dp"
+
+        <CheckBox
+            android:id="@+id/takCheck"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/textfield_white"
             android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/takCheck"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/customborder"
-                android:gravity="top|center_vertical|center_horizontal"
-                android:text="Tak" />
-
-            <CheckBox
-                android:id="@+id/nieCheck"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:background="@drawable/customborder"
-                android:gravity="top|center_vertical|center_horizontal"
-                android:text="Nie" />
-        </LinearLayout>
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:text="Tak"
+            android:textColor="@color/text_white"
+            android:textSize="18dp"
+            android:theme="@style/checkBoxStyle" />
 
         <Button
             android:id="@+id/deleteBtn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="100dp"
             android:background="@drawable/custombuttonborder"
             android:text="Usuń konto"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/text_white" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -20,8 +20,8 @@
     <string name="signed_in">Zalogowany</string>
     <string name="signed_out">Wylogowany</string>
 
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Hasło</string>
+    <string name="hint_email">Podaj adres email</string>
+    <string name="hint_password">Podaj hasło</string>
     <string name="desc_firebase_lockup">Firebase logo and name</string>
     <string name="auth_failed">Uwierzytelnienie nie powiodło się</string>
 
@@ -64,4 +64,6 @@
         <item>przybrać na wadze</item>
     </string-array>
     <string name="title_activity_edit_profile">EditProfile</string>
+    <string name="title_activity_add_product_with_floating_button">AddProductWithFloatingButton
+    </string>
 </resources>

@@ -15,9 +15,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -32,7 +29,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 public class DeleteActivity extends AppCompatActivity {
     public EditText emailInput;
-   //public EditText passwordInput;
+    //public EditText passwordInput;
     public CheckBox takCheck;
     public CheckBox nieCheck;
     public Button deleteBtn;
@@ -40,39 +37,32 @@ public class DeleteActivity extends AppCompatActivity {
 
     public FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Toolbar myToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete);
-        emailInput = (EditText)findViewById(R.id.emailInput);
-      // passwordInput = (EditText)findViewById(R.id.passwordInput);
-        takCheck = (CheckBox)findViewById(R.id.takCheck);
-        nieCheck = (CheckBox)findViewById(R.id.nieCheck);
-        deleteBtn = (Button)findViewById(R.id.deleteBtn);
+        emailInput = (EditText) findViewById(R.id.emailInput);
+        // passwordInput = (EditText)findViewById(R.id.passwordInput);
+        takCheck = (CheckBox) findViewById(R.id.takCheck);
+
+        deleteBtn = (Button) findViewById(R.id.deleteBtn);
         deleteBtn.setOnClickListener(deleteBtnOnClick);
 
         takCheck.setOnClickListener(takCheckListener);
-        nieCheck.setOnClickListener(nieCheckListener);
+
 
 
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         createDrawer();
     }
+
     View.OnClickListener takCheckListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(nieCheck.isChecked()){
+            if (nieCheck.isChecked()) {
                 nieCheck.toggle();
-            }
-        }
-    };
-
-    View.OnClickListener nieCheckListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if(takCheck.isChecked()){
-                takCheck.toggle();
             }
         }
     };
@@ -81,12 +71,12 @@ public class DeleteActivity extends AppCompatActivity {
     View.OnClickListener deleteBtnOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(!takCheck.isChecked() && !nieCheck.isChecked()){
-                Toast.makeText(DeleteActivity.this,"WYBIERZ OPCJE!!!",Toast.LENGTH_SHORT).show();
-            }else{
-                if(takCheck.isChecked()){
+            if (!takCheck.isChecked() && !nieCheck.isChecked()) {
+                Toast.makeText(DeleteActivity.this, "WYBIERZ OPCJE!!!", Toast.LENGTH_SHORT).show();
+            } else {
+                if (takCheck.isChecked()) {
                     FirebaseUser user = mAuth.getCurrentUser();
-                    if(user.getEmail().equals((emailInput.getText().toString()).replaceAll("\\s",""))) {
+                    if (user.getEmail().equals((emailInput.getText().toString()).replaceAll("\\s", ""))) {
                         user.delete();
                         Toast.makeText(DeleteActivity.this, "Twoje konto zostało usunięte", Toast.LENGTH_SHORT).show();
 
@@ -95,11 +85,11 @@ public class DeleteActivity extends AppCompatActivity {
 
                         mAuth.signOut();
                         updateUI();
-                    }else{
+                    } else {
                         Toast.makeText(DeleteActivity.this, "Podałeś nieprawidłowy email", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(DeleteActivity.this,"NIE TO NIE!",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DeleteActivity.this, "NIE TO NIE!", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -118,26 +108,28 @@ public class DeleteActivity extends AppCompatActivity {
 
     //ustawienie trzech kropeczek
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     //ustawienie zdarzenia po wybraniu opcji w trzech kropeczkach
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.settings) {
-            Toast.makeText(DeleteActivity.this,"settings",Toast.LENGTH_SHORT).show();
+            Toast.makeText(DeleteActivity.this, "settings", Toast.LENGTH_SHORT).show();
             return true;
-        }if(item.getItemId() == R.id.logOut){
+        }
+        if (item.getItemId() == R.id.logOut) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Na pewno chcesz się wylogować?");
             builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     mAuth.signOut();
-                    Intent intent = new Intent(DeleteActivity.this,EmailPasswordActivity.class);
+                    Intent intent = new Intent(DeleteActivity.this, EmailPasswordActivity.class);
                     startActivity(intent);
                 }
             });
@@ -154,6 +146,7 @@ public class DeleteActivity extends AppCompatActivity {
 
         return false;
     }
+
     //menu z lewej strony
     public void createDrawer() {
 
@@ -161,8 +154,10 @@ public class DeleteActivity extends AppCompatActivity {
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
         SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
+        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
+        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -184,7 +179,7 @@ public class DeleteActivity extends AppCompatActivity {
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy,dodajAktywnoscDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc,edytujAktywnosc)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -207,12 +202,22 @@ public class DeleteActivity extends AppCompatActivity {
                                 intent = new Intent(DeleteActivity.this, AddProductToDatabase.class);
                                 startActivity(intent);
                                 break;
+
                             case 5:
+                                intent = new Intent(DeleteActivity.this, AddActivityToDatabase.class);
+                                startActivity(intent);
+                                break;
+
+                            case 6:
                                 intent = new Intent(DeleteActivity.this, AddDailyProducts.class);
                                 startActivity(intent);
                                 break;
-                            case 6:
+                            case 7:
                                 intent = new Intent(DeleteActivity.this, AddDailyActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 8:
+                                intent = new Intent(DeleteActivity.this, EditAddedActivity.class);
                                 startActivity(intent);
                             default:
                                 break;

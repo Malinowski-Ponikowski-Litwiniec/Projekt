@@ -10,14 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,9 +31,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,8 +58,7 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        btn = (Button) findViewById(R.id.btn);
-        btn.setOnClickListener(btnClick);
+
         mAuth = FirebaseAuth.getInstance();
         sendToDatabase = (Button) findViewById(R.id.sendToDatabaseBtn);
         sendToDatabase.setOnClickListener(sendToDatabaseOnClick);
@@ -80,10 +75,11 @@ public class EditActivity extends AppCompatActivity {
         createDrawer();
 
 
-getFromDatabase();
+        getFromDatabase();
 
     }
-//wysłanie zaktualizowanych danych użytkownika do bazy
+
+    //wysłanie zaktualizowanych danych użytkownika do bazy
     View.OnClickListener sendToDatabaseOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -110,12 +106,12 @@ getFromDatabase();
                 Toast.makeText(EditActivity.this, "Podany wzrost jest za duży", Toast.LENGTH_SHORT).show();
             } else {
                 CurrentUser user = new CurrentUser(age.getText().toString(), weight.getText().toString(),
-                        height.getText().toString(), activity.getSelectedItem().toString(), sex.getSelectedItem().toString(),goal.getSelectedItem().toString());
+                        height.getText().toString(), activity.getSelectedItem().toString(), sex.getSelectedItem().toString(), goal.getSelectedItem().toString());
                 UserBmi bmi = new UserBmi();
                 user = bmi.calculateBmi(user);
                 UserMacro macro = bmi.calculateMacro(user);
                 RealtimeDatabase rd = new RealtimeDatabase();
-                rd.setValue(user,macro);
+                rd.setValue(user, macro);
                 Toast.makeText(EditActivity.this, "Wysłano", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(EditActivity.this, UserProfile.class);
                 startActivity(intent);
@@ -138,116 +134,117 @@ getFromDatabase();
     }
 
 
-
     //pobranie z bazy danych użytkownika
-public void getFromDatabase(){
-    myRef.child("users").addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
+    public void getFromDatabase() {
+        myRef.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            Map<String, CurrentUser> map = new HashMap<>();
-            for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                Map<String, CurrentUser> map = new HashMap<>();
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
 
-                CurrentUser currentUser = new CurrentUser(noteDataSnapshot.getValue(CurrentUser.class).getWiek(),
-                        noteDataSnapshot.getValue(CurrentUser.class).getWaga(),
-                        noteDataSnapshot.getValue(CurrentUser.class).getWzrost(),
-                        noteDataSnapshot.getValue(CurrentUser.class).getActivity(),
-                        noteDataSnapshot.getValue(CurrentUser.class).getSex(),
-                        noteDataSnapshot.getValue(CurrentUser.class).getGoal());
+                    CurrentUser currentUser = new CurrentUser(noteDataSnapshot.getValue(CurrentUser.class).getWiek(),
+                            noteDataSnapshot.getValue(CurrentUser.class).getWaga(),
+                            noteDataSnapshot.getValue(CurrentUser.class).getWzrost(),
+                            noteDataSnapshot.getValue(CurrentUser.class).getActivity(),
+                            noteDataSnapshot.getValue(CurrentUser.class).getSex(),
+                            noteDataSnapshot.getValue(CurrentUser.class).getGoal());
 
-                map.put(noteDataSnapshot.getKey(), currentUser);
+                    map.put(noteDataSnapshot.getKey(), currentUser);
 
-
-            }
-
-
-            for (Map.Entry<String, CurrentUser> entry : map.entrySet()) {
-                if (entry.getKey().equals(curId)) {
-
-                    age.setText(entry.getValue().getWiek());
-                    weight.setText(entry.getValue().getWaga());
-                    height.setText(entry.getValue().getWzrost());
-                    switch (entry.getValue().getActivity()) {
-                        case "niska":
-                            activity.setSelection(0);
-                            break;
-                        case "średnia":
-                            activity.setSelection(1);
-                            break;
-                        case "wysoka":
-                            activity.setSelection(2);
-                            break;
-                        case "bardzo wysoka":
-                            activity.setSelection(3);
-                            break;
-                        default:
-                            System.out.println("NULL");
-                            break;
-                    }
-                    switch (entry.getValue().getSex()) {
-                        case "kobieta":
-                            sex.setSelection(0);
-                            break;
-                        case "mężczyzna":
-                            sex.setSelection(1);
-                            break;
-
-                        default:
-                            System.out.println("NULL");
-                            break;
-                    }
-                    switch(entry.getValue().getGoal()){
-                        case "schudnąć":
-                            goal.setSelection(0);
-                            break;
-                        case "utrzymać wagę":
-                            goal.setSelection(1);
-                            break;
-                        case "przybrać na wadze":
-                            goal.setSelection(2);
-                            break;
-                        default:
-                            System.out.println("NULL");
-                            break;
-                    }
 
                 }
+
+
+                for (Map.Entry<String, CurrentUser> entry : map.entrySet()) {
+                    if (entry.getKey().equals(curId)) {
+
+                        age.setText(entry.getValue().getWiek());
+                        weight.setText(entry.getValue().getWaga());
+                        height.setText(entry.getValue().getWzrost());
+                        switch (entry.getValue().getActivity()) {
+                            case "niska":
+                                activity.setSelection(0);
+                                break;
+                            case "średnia":
+                                activity.setSelection(1);
+                                break;
+                            case "wysoka":
+                                activity.setSelection(2);
+                                break;
+                            case "bardzo wysoka":
+                                activity.setSelection(3);
+                                break;
+                            default:
+                                System.out.println("NULL");
+                                break;
+                        }
+                        switch (entry.getValue().getSex()) {
+                            case "kobieta":
+                                sex.setSelection(0);
+                                break;
+                            case "mężczyzna":
+                                sex.setSelection(1);
+                                break;
+
+                            default:
+                                System.out.println("NULL");
+                                break;
+                        }
+                        switch (entry.getValue().getGoal()) {
+                            case "schudnąć":
+                                goal.setSelection(0);
+                                break;
+                            case "utrzymać wagę":
+                                goal.setSelection(1);
+                                break;
+                            case "przybrać na wadze":
+                                goal.setSelection(2);
+                                break;
+                            default:
+                                System.out.println("NULL");
+                                break;
+                        }
+
+                    }
+                }
             }
-        }
 
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            System.out.println("-------------------");
-            System.out.println("DATABASE ERROR");
-            System.out.println("-------------------");
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("-------------------");
+                System.out.println("DATABASE ERROR");
+                System.out.println("-------------------");
 
-        }
+            }
 
-    });
-}
+        });
+    }
 
     //ustawienie trzech kropeczek
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     //ustawienie zdarzenia po wybraniu opcji w trzech kropeczkach
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.settings) {
-            Toast.makeText(EditActivity.this,"settings",Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditActivity.this, "settings", Toast.LENGTH_SHORT).show();
             return true;
-        }if(item.getItemId() == R.id.logOut){
+        }
+        if (item.getItemId() == R.id.logOut) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Na pewno chcesz się wylogować?");
             builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     mAuth.signOut();
-                    Intent intent = new Intent(EditActivity.this,EmailPasswordActivity.class);
+                    Intent intent = new Intent(EditActivity.this, EmailPasswordActivity.class);
                     startActivity(intent);
                 }
             });
@@ -264,6 +261,7 @@ public void getFromDatabase(){
 
         return false;
     }
+
     //menu z lewej strony
     public void createDrawer() {
 
@@ -271,8 +269,10 @@ public void getFromDatabase(){
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
         SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
+        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
+        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -294,7 +294,7 @@ public void getFromDatabase(){
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy,dodajAktywnoscDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc,edytujAktywnosc)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -317,12 +317,22 @@ public void getFromDatabase(){
                                 intent = new Intent(EditActivity.this, AddProductToDatabase.class);
                                 startActivity(intent);
                                 break;
+
                             case 5:
+                                intent = new Intent(EditActivity.this, AddActivityToDatabase.class);
+                                startActivity(intent);
+                                break;
+
+                            case 6:
                                 intent = new Intent(EditActivity.this, AddDailyProducts.class);
                                 startActivity(intent);
                                 break;
-                            case 6:
+                            case 7:
                                 intent = new Intent(EditActivity.this, AddDailyActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 8:
+                                intent = new Intent(EditActivity.this, EditAddedActivity.class);
                                 startActivity(intent);
                             default:
                                 break;

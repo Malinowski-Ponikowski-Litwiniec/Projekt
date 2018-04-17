@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.google.firebase.quickstart.auth.AddActivityToDatabase">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient4_edit"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Dodaj aktywność fizyczną"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="201dp"
+                android:background="@drawable/customborder"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="Czas (w minutach):"
+                    android:textColor="@color/text_white" />
+
+                <EditText
+                    android:id="@+id/time"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/textfield_white"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:text="60"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="234dp"
+                android:background="@drawable/customborder"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="Liczba spalonych kalorii:"
+                    android:textColor="@color/text_white" />
+
+                <EditText
+                    android:id="@+id/kcal"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/textfield_white"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="62dp"
+                android:background="@drawable/customborder"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="Podaj nazwę \nćwiczenia:"
+                    android:textColor="@color/text_white" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/textfield_white"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_black" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/dodajBtn"
+                style="@style/FirebaseUI.Button"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="45dp"
+                android:background="@drawable/custombuttonborder"
+                android:gravity="center"
+                android:text="Dodaj" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="364dp"
+                android:layout_height="61dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="267dp"
+                app:srcCompat="@drawable/textline" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="364dp"
+                android:layout_height="61dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp"
+                app:srcCompat="@drawable/textline" />
+
+
+        </RelativeLayout>
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            fab:menu_fab_size="normal"
+            fab:menu_showShadow="true"
+            fab:menu_shadowColor="#66000000"
+            fab:menu_shadowRadius="4dp"
+            fab:menu_shadowXOffset="1dp"
+            fab:menu_shadowYOffset="3dp"
+            fab:menu_colorNormal="#DA4336"
+            fab:menu_colorPressed="#E75043"
+            fab:menu_colorRipple="#99FFFFFF"
+            fab:menu_animationDelayPerItem="50"
+            fab:menu_icon="@drawable/fab_add"
+            fab:menu_buttonSpacing="0dp"
+            fab:menu_labels_margin="0dp"
+            fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+            fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+            fab:menu_labels_paddingTop="4dp"
+            fab:menu_labels_paddingRight="8dp"
+            fab:menu_labels_paddingBottom="4dp"
+            fab:menu_labels_paddingLeft="8dp"
+            fab:menu_labels_padding="8dp"
+            fab:menu_labels_textColor="#FFFFFF"
+            fab:menu_labels_textSize="14sp"
+            fab:menu_labels_cornerRadius="3dp"
+            fab:menu_labels_colorNormal="#333333"
+            fab:menu_labels_colorPressed="#444444"
+            fab:menu_labels_colorRipple="#66FFFFFF"
+            fab:menu_labels_showShadow="true"
+            fab:menu_labels_singleLine="false"
+            fab:menu_labels_ellipsize="none"
+            fab:menu_labels_maxLines="-1"
+            fab:menu_labels_style="@style/Animation.Design.BottomSheetDialog"
+            fab:menu_labels_position="left"
+            fab:menu_openDirection="up"
+            fab:menu_backgroundColor="@android:color/transparent"
+            fab:menu_fab_label=""
+            fab:menu_fab_show_animation="@anim/fab_scale_down"
+            fab:menu_fab_hide_animation="@anim/fab_scale_down">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addProductToDatabase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/com_facebook_button_like_icon_selected"
+            fab:fab_size="mini"
+            fab:fab_label="Dodaj produkt to bazy" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addProductToList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/com_facebook_button_like_icon_selected"
+            fab:fab_size="mini"
+            fab:fab_label="Dodaj produkt do dziennej listy" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addActivityToList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/com_facebook_button_like_icon_selected"
+            fab:fab_size="mini"
+            fab:fab_label="Dodaj aktywność do dziennej listy" />
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

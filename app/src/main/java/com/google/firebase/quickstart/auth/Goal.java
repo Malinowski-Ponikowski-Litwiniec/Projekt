@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,7 +55,7 @@ public class Goal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
         btn = (Button) findViewById(R.id.btn);
-        btn.setOnClickListener(btnClick);
+//        btn.setOnClickListener(btnClick);
         mAuth = FirebaseAuth.getInstance();
         sendToDatabase = (Button) findViewById(R.id.sendToDatabaseBtn);
         sendToDatabase.setOnClickListener(sendToDatabaseOnClick);
@@ -64,6 +66,11 @@ public class Goal extends AppCompatActivity {
         sex = (Spinner) findViewById(R.id.spinnerSex);
         goal = (Spinner)findViewById(R.id.spinnerGoal);
         Date date = new Date();
+
+        Window window = Goal.this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Goal.this.getResources().getColor(R.color.primary_dark));
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat = simpleDateFormat.format(date);
@@ -85,8 +92,8 @@ public class Goal extends AppCompatActivity {
             Matcher heightMatcher = pattern.matcher(heightString);
 
             myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("kcal").setValue(0.0);
-            myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("curMacro").setValue(new Produkt(0.0,0.0,0.0));
-           
+            myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("curMacro").setValue(new Produkt("",0.0,0.0,0.0,0.0,0.0));
+            myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("burnedAndKcal").setValue(new curKcalAndBurnedKcal(0.0,0.0));
             if (ageString.isEmpty() || weightString.isEmpty() || heightString.isEmpty()) {
                 Toast.makeText(Goal.this, "Wszystkie pola muszą być uzupełnione", Toast.LENGTH_SHORT).show();
             } else if (!ageMatcher.matches() || !weightMatcher.matches() || !heightMatcher.matches()) {
@@ -119,13 +126,13 @@ public class Goal extends AppCompatActivity {
             }
         }
     };
-    View.OnClickListener btnClick = new View.OnClickListener() {
-        public void onClick(View v) {
-            mAuth.signOut();
-            updateUI();
-
-        }
-    };
+//    View.OnClickListener btnClick = new View.OnClickListener() {
+//        public void onClick(View v) {
+//            mAuth.signOut();
+//            updateUI();
+//
+//        }
+//    };
 
     private void updateUI() {
         Intent intent = new Intent(this, EmailPasswordActivity.class);

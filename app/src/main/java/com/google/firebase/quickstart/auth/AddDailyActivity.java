@@ -42,10 +42,15 @@ public class AddDailyActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     public FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_daily);
+
+
+
 
         listView = (ListView) findViewById(R.id.listView);
 
@@ -56,9 +61,35 @@ public class AddDailyActivity extends AppCompatActivity {
         setList();
 
     }
+
+    View.OnClickListener addProductToDatabaseOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(AddDailyActivity.this,AddProductToDatabase.class);
+            startActivity(intent);
+        }
+    };
+    View.OnClickListener addProductToListOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(AddDailyActivity.this,AddDailyProducts.class);
+            startActivity(intent);
+        }
+    };
+    View.OnClickListener addActivityToDatabaseOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(AddDailyActivity.this,AddActivityToDatabase.class);
+            startActivity(intent);
+        }
+    };
+
+
+
+
     //ustawienie trzech kropeczek
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
         return true;
@@ -69,16 +100,17 @@ public class AddDailyActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.settings) {
-            Toast.makeText(AddDailyActivity.this,"settings",Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddDailyActivity.this, "settings", Toast.LENGTH_SHORT).show();
             return true;
-        }if(item.getItemId() == R.id.logOut){
+        }
+        if (item.getItemId() == R.id.logOut) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Na pewno chcesz się wylogować?");
             builder.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     mAuth.signOut();
-                    Intent intent = new Intent(AddDailyActivity.this,EmailPasswordActivity.class);
+                    Intent intent = new Intent(AddDailyActivity.this, EmailPasswordActivity.class);
                     startActivity(intent);
                 }
             });
@@ -104,8 +136,10 @@ public class AddDailyActivity extends AppCompatActivity {
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
         SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
+        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
+        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -127,7 +161,7 @@ public class AddDailyActivity extends AppCompatActivity {
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy,dodajAktywnoscDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc,edytujAktywnosc)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -150,12 +184,22 @@ public class AddDailyActivity extends AppCompatActivity {
                                 intent = new Intent(AddDailyActivity.this, AddProductToDatabase.class);
                                 startActivity(intent);
                                 break;
+
                             case 5:
+                                intent = new Intent(AddDailyActivity.this, AddActivityToDatabase.class);
+                                startActivity(intent);
+                                break;
+
+                            case 6:
                                 intent = new Intent(AddDailyActivity.this, AddDailyProducts.class);
                                 startActivity(intent);
                                 break;
-                            case 6:
+                            case 7:
                                 intent = new Intent(AddDailyActivity.this, AddDailyActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 8:
+                                intent = new Intent(AddDailyActivity.this, EditAddedActivity.class);
                                 startActivity(intent);
                             default:
                                 break;
@@ -168,7 +212,7 @@ public class AddDailyActivity extends AppCompatActivity {
     }
 
     //pobranie i ustawienie listy produktów w ListView
-    public void setList(){
+    public void setList() {
         myRef.child("aktywnosc").addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -189,10 +233,10 @@ public class AddDailyActivity extends AppCompatActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        String item = ((TextView)view).getText().toString();
+                        String item = ((TextView) view).getText().toString();
 
-                        Intent intent = new Intent(AddDailyActivity.this,AddDailyActivityForm.class);
-                        intent.putExtra("name",item);
+                        Intent intent = new Intent(AddDailyActivity.this, AddDailyActivityForm.class);
+                        intent.putExtra("name", item);
                         startActivity(intent);
                     }
                 });

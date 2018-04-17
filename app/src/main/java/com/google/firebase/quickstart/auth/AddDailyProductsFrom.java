@@ -35,7 +35,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -82,6 +81,10 @@ public class AddDailyProductsFrom extends AppCompatActivity {
     public DatabaseReference macroRef;
     public DatabaseReference testRef;
 
+    double curKcal;
+    double curProtein;
+    double curCarbs;
+    double curFat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +99,7 @@ public class AddDailyProductsFrom extends AppCompatActivity {
         dateFormat = simpleDateFormat.format(date);
 
         //ustawie referencji
-        kcalRef = myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("kcal");
+        kcalRef = myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("burnedAndKcal").child("kcal");
         macroRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("curMacro");
         testRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("sniadanie");
         testRef = myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("obiad");
@@ -133,33 +136,33 @@ public class AddDailyProductsFrom extends AppCompatActivity {
 
         getFromDatabase();
 
-        //zdarzenie po zabraniu "focusu" z EditText(ilości produktu)
-        productAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    productAmount.setText("");
-                } else {
-                    if (productAmount.getText().toString().isEmpty()) {
-                        productAmount.setText("100");
-                    }
-
-
-                    productResultAmount = productAmountTemp;
-                    productResultCarbs = productCarbsTemp * productAmountTemp;
-                    productResultFat = productFatTemp * productAmountTemp;
-                    productResultProtein = productProteinTemp * productAmountTemp;
-                    productResultKcal = productKcalTemp * productAmountTemp;
-
-                    productCarbs.setText(String.valueOf(productResultCarbs));
-                    productFat.setText(String.valueOf(productResultFat));
-                    productProtein.setText(String.valueOf(productResultProtein));
-                    productKcal.setText(String.valueOf(productResultKcal));
-
-
-                }
-            }
-        });
+//        //zdarzenie po zabraniu "focusu" z EditText(ilości produktu)
+//        productAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    productAmount.setText("");
+//                } else {
+//                    if (productAmount.getText().toString().isEmpty()) {
+//                        productAmount.setText("100");
+//                    }
+//
+//
+//                    productResultAmount = productAmountTemp;
+//                    productResultCarbs = productCarbsTemp * productAmountTemp;
+//                    productResultFat = productFatTemp * productAmountTemp;
+//                    productResultProtein = productProteinTemp * productAmountTemp;
+//                    productResultKcal = productKcalTemp * productAmountTemp;
+//
+//                    productCarbs.setText(String.valueOf(productResultCarbs));
+//                    productFat.setText(String.valueOf(productResultFat));
+//                    productProtein.setText(String.valueOf(productResultProtein));
+//                    productKcal.setText(String.valueOf(productResultKcal));
+//
+//
+//                }
+//            }
+//        });
 
 
         //zdarzenie po naciśnięciu na "Dodaj"
@@ -173,21 +176,25 @@ public class AddDailyProductsFrom extends AppCompatActivity {
                         productAmountTemp = Double.valueOf(productAmount.getText().toString()) / 100;
 
 
-                        productResultAmount = productAmountTemp;
-                        productResultCarbs = productCarbsTemp * productAmountTemp;
-                        productResultFat = productFatTemp * productAmountTemp;
-                        productResultProtein = productProteinTemp * productAmountTemp;
-                        productResultKcal = productKcalTemp * productAmountTemp;
+                        //ustawienie miejsca po przecinku w wyniku
 
-                        //ustawienie dwóch miejsc po przecinku w wyniku
-                        productResultAmount = BigDecimal.valueOf(productResultAmount).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                        productResultCarbs = BigDecimal.valueOf(productResultCarbs).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                        productResultFat = BigDecimal.valueOf(productResultFat).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                        productResultProtein = BigDecimal.valueOf(productResultProtein).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                        productResultKcal = BigDecimal.valueOf(productResultKcal).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                        productResultCarbs = BigDecimal.valueOf(Double.valueOf(productCarbs.getText().toString())).setScale(1, RoundingMode.HALF_UP).doubleValue();
+                        productResultFat = BigDecimal.valueOf(Double.valueOf(productFat.getText().toString())).setScale(1, RoundingMode.HALF_UP).doubleValue();
+                        productResultProtein = BigDecimal.valueOf(Double.valueOf(productProtein.getText().toString())).setScale(1, RoundingMode.HALF_UP).doubleValue();
+                        productResultKcal = BigDecimal.valueOf(Double.valueOf(productKcal.getText().toString())).setScale(1, RoundingMode.HALF_UP).doubleValue();
 
+                        if (Integer.parseInt(productAmount.getText().toString()) == 100) {
+                            productResultAmount = 100.0;
+                        } else {
+                            int pom = Integer.parseInt(productAmount.getText().toString()) / 100;
+                            productResultAmount = BigDecimal.valueOf(Double.valueOf(pom)).setScale(1, RoundingMode.HALF_UP).doubleValue();
+                            productResultCarbs *= pom;
+                            productResultFat *= pom;
+                            productResultProtein *= pom;
+                            productResultKcal *= pom;
+                        }
                         //utworzenie obiektu z końcowymi wartościami
-                        Produkt produkt = new Produkt(productResultAmount, productResultProtein, productResultCarbs, productResultFat, productResultKcal);
+                        Produkt produkt = new Produkt("", productResultAmount, productResultProtein, productResultCarbs, productResultFat, productResultKcal);
 
 
                         //dodanie wybranego produktu do bazy
@@ -231,25 +238,26 @@ public class AddDailyProductsFrom extends AppCompatActivity {
 
     //ustwaienie sumy kalorii w bazie oraz skladników
     public void setKcal() {
-
+        curKcal = 0;
+         curProtein = 0;
+         curCarbs = 0;
+         curFat = 0;
         //obliczenie sumy macro i kcal
         myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("sniadanie").addValueEventListener(new ValueEventListener() {
             Map<String, Produkt> map = new HashMap<>();
-            double curKcal = 0;
-            double curProtein = 0;
-            double curCarbs = 0;
-            double curFat = 0;
+
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                    map.put(noteDataSnapshot.getKey(), new Produkt(noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                    map.put(noteDataSnapshot.getKey(), new Produkt("", noteDataSnapshot.getValue(Produkt.class).getAmount(),
+                            noteDataSnapshot.getValue(Produkt.class).getProtein(),
                             noteDataSnapshot.getValue(Produkt.class).getCarbs(),
                             noteDataSnapshot.getValue(Produkt.class).getFat(),
                             noteDataSnapshot.getValue(Produkt.class).getKcal()));
-
                 }
                 for (Map.Entry<String, Produkt> entry : map.entrySet()) {
+
                     curKcal += entry.getValue().getKcal();
                     curProtein += entry.getValue().getProtein();
                     curCarbs += entry.getValue().getCarbs();
@@ -263,11 +271,11 @@ public class AddDailyProductsFrom extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                            map.put(noteDataSnapshot.getKey(), new Produkt(noteDataSnapshot.getValue(Produkt.class).getKcal(),
+                            map.put(noteDataSnapshot.getKey(), new Produkt("", noteDataSnapshot.getValue(Produkt.class).getAmount(),
                                     noteDataSnapshot.getValue(Produkt.class).getProtein(),
                                     noteDataSnapshot.getValue(Produkt.class).getCarbs(),
-                                    noteDataSnapshot.getValue(Produkt.class).getFat()));
-
+                                    noteDataSnapshot.getValue(Produkt.class).getFat(),
+                                    noteDataSnapshot.getValue(Produkt.class).getKcal()));
                         }
                         for (Map.Entry<String, Produkt> entry : map.entrySet()) {
                             curKcal += entry.getValue().getKcal();
@@ -283,10 +291,11 @@ public class AddDailyProductsFrom extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                                    map.put(noteDataSnapshot.getKey(), new Produkt(noteDataSnapshot.getValue(Produkt.class).getKcal(),
+                                    map.put(noteDataSnapshot.getKey(), new Produkt("", noteDataSnapshot.getValue(Produkt.class).getAmount(),
                                             noteDataSnapshot.getValue(Produkt.class).getProtein(),
                                             noteDataSnapshot.getValue(Produkt.class).getCarbs(),
-                                            noteDataSnapshot.getValue(Produkt.class).getFat()));
+                                            noteDataSnapshot.getValue(Produkt.class).getFat(),
+                                            noteDataSnapshot.getValue(Produkt.class).getKcal()));
 
                                 }
                                 for (Map.Entry<String, Produkt> entry : map.entrySet()) {
@@ -303,10 +312,11 @@ public class AddDailyProductsFrom extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                                            map.put(noteDataSnapshot.getKey(), new Produkt(noteDataSnapshot.getValue(Produkt.class).getKcal(),
+                                            map.put(noteDataSnapshot.getKey(), new Produkt("", noteDataSnapshot.getValue(Produkt.class).getAmount(),
                                                     noteDataSnapshot.getValue(Produkt.class).getProtein(),
                                                     noteDataSnapshot.getValue(Produkt.class).getCarbs(),
-                                                    noteDataSnapshot.getValue(Produkt.class).getFat()));
+                                                    noteDataSnapshot.getValue(Produkt.class).getFat(),
+                                                    noteDataSnapshot.getValue(Produkt.class).getKcal()));
 
                                         }
                                         for (Map.Entry<String, Produkt> entry : map.entrySet()) {
@@ -316,9 +326,14 @@ public class AddDailyProductsFrom extends AppCompatActivity {
                                             curFat += entry.getValue().getFat();
 
                                         }
-                                        kcalRef.setValue(BigDecimal.valueOf(curKcal).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                                        Produkt produkt = new Produkt(curProtein, curCarbs, curFat);
+                                        kcalRef.setValue(BigDecimal.valueOf(curKcal).setScale(1, RoundingMode.HALF_UP).doubleValue());
+                                        curFat = BigDecimal.valueOf(curFat).setScale(1, RoundingMode.HALF_UP).doubleValue();
+                                        curCarbs = BigDecimal.valueOf(curCarbs).setScale(1, RoundingMode.HALF_UP).doubleValue();
+                                        curProtein = BigDecimal.valueOf(curProtein).setScale(1, RoundingMode.HALF_UP).doubleValue();
+
+                                        Produkt produkt = new Produkt("", 0, curProtein, curCarbs, curFat, curKcal);
                                         macroRef.setValue(produkt);
+                                        setCurKcal();
                                         System.out.println(produkt.getProtein() + " ----------- " + produkt.getCarbs() + " _---------- " + produkt.getFat());
                                     }
 
@@ -357,7 +372,25 @@ public class AddDailyProductsFrom extends AppCompatActivity {
 
     }
 
+public void setCurKcal(){
+    myRef.child("lista").child(mAuth.getCurrentUser().getUid()).child(dateFormat).child("burnedAndKcal").addValueEventListener(new ValueEventListener() {
+       Map<String,Double> map = new HashMap<>();
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()){
+                map.put(noteDataSnapshot.getKey(),Double.valueOf(String.valueOf(noteDataSnapshot.getValue())));
+            }
+            double currentKcal = map.get("kcal") - map.get("burnedKcal");
+            myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("kcal").setValue(BigDecimal.valueOf(Double.valueOf(currentKcal)).setScale(1, RoundingMode.HALF_UP).doubleValue());
+        }
 
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    });
+}
     //walidacja zaznaczania checkBoxów
     View.OnClickListener onRadioButtonClick = new View.OnClickListener() {
         @Override
@@ -444,6 +477,7 @@ public class AddDailyProductsFrom extends AppCompatActivity {
         menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     //ustawienie zdarzenia po wybraniu opcji w trzech kropeczkach
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -485,8 +519,10 @@ public class AddDailyProductsFrom extends AppCompatActivity {
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
         SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
+        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
+        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -508,7 +544,7 @@ public class AddDailyProductsFrom extends AppCompatActivity {
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajAktywnoscDoBazy, dodajDoDziennejListy, dodajDoDziennejListyAktywnosc, edytujAktywnosc)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -531,12 +567,22 @@ public class AddDailyProductsFrom extends AppCompatActivity {
                                 intent = new Intent(AddDailyProductsFrom.this, AddProductToDatabase.class);
                                 startActivity(intent);
                                 break;
+
                             case 5:
+                                intent = new Intent(AddDailyProductsFrom.this, AddActivityToDatabase.class);
+                                startActivity(intent);
+                                break;
+
+                            case 6:
                                 intent = new Intent(AddDailyProductsFrom.this, AddDailyProducts.class);
                                 startActivity(intent);
                                 break;
-                            case 6:
+                            case 7:
                                 intent = new Intent(AddDailyProductsFrom.this, AddDailyActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 8:
+                                intent = new Intent(AddDailyProductsFrom.this, EditAddedActivity.class);
                                 startActivity(intent);
                             default:
                                 break;

@@ -36,6 +36,7 @@ public class AddProductToDatabase extends AppCompatActivity {
     public FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Toolbar myToolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,31 @@ public class AddProductToDatabase extends AppCompatActivity {
         createDrawer();
     }
 
+
+
+
+    View.OnClickListener addProductToListOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(AddProductToDatabase.this,AddDailyProducts.class);
+            startActivity(intent);
+        }
+    };
+    View.OnClickListener addActivityToDatabaseOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(AddProductToDatabase.this,AddActivityToDatabase.class);
+            startActivity(intent);
+        }
+    };
+    View.OnClickListener addActivityToListOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(AddProductToDatabase.this,AddDailyActivity.class);
+            startActivity(intent);
+        }
+    };
+
     //wysłanie produktu do bazy
     View.OnClickListener sendOnClick = new View.OnClickListener() {
         @Override
@@ -65,13 +91,14 @@ public class AddProductToDatabase extends AppCompatActivity {
             ProductsDatabase pd = new ProductsDatabase();
             pd.sendProdukt(produkt);
             Toast.makeText(AddProductToDatabase.this, "Wysłano produkt do bazy", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(AddProductToDatabase.this,UserProfile.class);
+            Intent intent = new Intent(AddProductToDatabase.this, UserProfile.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-startActivity(intent);
+            startActivity(intent);
 
 
         }
     };
+
     //ustawienie trzech kropeczek
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,6 +106,7 @@ startActivity(intent);
         menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     //ustawienie zdarzenia po wybraniu opcji w trzech kropeczkach
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -111,6 +139,7 @@ startActivity(intent);
 
         return false;
     }
+
     //menu z lewej strony
     public void createDrawer() {
 
@@ -118,8 +147,10 @@ startActivity(intent);
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
         SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
+        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
+        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
+        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -141,7 +172,7 @@ startActivity(intent);
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy,dodajAktywnoscDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc,edytujAktywnosc)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -164,12 +195,22 @@ startActivity(intent);
                                 intent = new Intent(AddProductToDatabase.this, AddProductToDatabase.class);
                                 startActivity(intent);
                                 break;
+
                             case 5:
+                                intent = new Intent(AddProductToDatabase.this, AddActivityToDatabase.class);
+                                startActivity(intent);
+                                break;
+
+                            case 6:
                                 intent = new Intent(AddProductToDatabase.this, AddDailyProducts.class);
                                 startActivity(intent);
                                 break;
-                            case 6:
+                            case 7:
                                 intent = new Intent(AddProductToDatabase.this, AddDailyActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 8:
+                                intent = new Intent(AddProductToDatabase.this, EditAddedActivity.class);
                                 startActivity(intent);
                             default:
                                 break;

@@ -12,20 +12,9 @@ public class Produkt {
     public double fat;
     public double kcal;
 
-    public Produkt(){}
-    public Produkt(double kcal) {
-        this.kcal = kcal;
-    }
 
-    public Produkt(String name) {
-        this.name = name;
-    }
-public Produkt(double protein, double carbs, double fat, double kcal){
-        this.protein = protein;
-        this.carbs = carbs;
-        this.fat = fat;
-        this.kcal = kcal;
-    }
+
+
     public Produkt(String name, double amount, double protein, double carbs, double fat, double kcal) {
         this.name = name;
         this.amount = amount;
@@ -34,21 +23,7 @@ public Produkt(double protein, double carbs, double fat, double kcal){
         this.fat = fat;
         this.kcal = kcal;
     }
-
-    public Produkt(double amount, double protein, double carbs, double fat, double kcal) {
-
-        this.amount = amount;
-        this.protein = protein;
-        this.carbs = carbs;
-        this.fat = fat;
-        this.kcal = kcal;
-    }
-    public Produkt(double protein,double carbs,double fat){
-    this.protein = protein;
-    this.carbs = carbs;
-    this.fat = fat;
-    }
-
+public Produkt(){}
     public String getName() {
         return name;
     }

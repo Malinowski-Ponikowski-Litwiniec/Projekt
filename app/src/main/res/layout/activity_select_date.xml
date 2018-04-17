@@ -4,24 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient4_edit"
     tools:context="com.google.firebase.quickstart.auth.SelectDate">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        android:theme="@style/AppTheme"
-        app:popupTheme="@style/AppTheme">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme">
 
-    </android.support.v7.widget.Toolbar>
-    <ListView
-        android:layout_width="395dp"
-        android:layout_height="587dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:id="@+id/listView"
-        tools:ignore="MissingConstraints" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Wybierz dzień"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:dividerHeight="3dp" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
