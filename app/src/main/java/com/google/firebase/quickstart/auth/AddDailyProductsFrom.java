@@ -36,6 +36,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -136,33 +137,6 @@ public class AddDailyProductsFrom extends AppCompatActivity {
 
         getFromDatabase();
 
-//        //zdarzenie po zabraniu "focusu" z EditText(ilości produktu)
-//        productAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    productAmount.setText("");
-//                } else {
-//                    if (productAmount.getText().toString().isEmpty()) {
-//                        productAmount.setText("100");
-//                    }
-//
-//
-//                    productResultAmount = productAmountTemp;
-//                    productResultCarbs = productCarbsTemp * productAmountTemp;
-//                    productResultFat = productFatTemp * productAmountTemp;
-//                    productResultProtein = productProteinTemp * productAmountTemp;
-//                    productResultKcal = productKcalTemp * productAmountTemp;
-//
-//                    productCarbs.setText(String.valueOf(productResultCarbs));
-//                    productFat.setText(String.valueOf(productResultFat));
-//                    productProtein.setText(String.valueOf(productResultProtein));
-//                    productKcal.setText(String.valueOf(productResultKcal));
-//
-//
-//                }
-//            }
-//        });
 
 
         //zdarzenie po naciśnięciu na "Dodaj"
@@ -235,6 +209,7 @@ public class AddDailyProductsFrom extends AppCompatActivity {
 
 
     }
+
 
     //ustwaienie sumy kalorii w bazie oraz skladników
     public void setKcal() {
@@ -518,11 +493,10 @@ public void setCurKcal(){
         PrimaryDrawerItem menu = new PrimaryDrawerItem().withIdentifier(1).withName("Menu").withSelectable(false);
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
-        SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
-        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
+        SecondaryDrawerItem currnetList = new SecondaryDrawerItem().withIdentifier(4).withName("Lista z dzisiejszego dnia");
+        SecondaryDrawerItem graph = new SecondaryDrawerItem().withIdentifier(4).withName("Graph");
+        SecondaryDrawerItem selectDate = new SecondaryDrawerItem().withIdentifier(4).withName("Wybierz date");
+
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -544,7 +518,8 @@ public void setCurKcal(){
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy, dodajAktywnoscDoBazy, dodajDoDziennejListy, dodajDoDziennejListyAktywnosc, edytujAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, currnetList,graph,selectDate
+                )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -564,27 +539,22 @@ public void setCurKcal(){
                                 startActivity(intent);
                                 break;
                             case 4:
-                                intent = new Intent(AddDailyProductsFrom.this, AddProductToDatabase.class);
+
+                                intent = new Intent(AddDailyProductsFrom.this, CurrentList.class);
                                 startActivity(intent);
                                 break;
-
                             case 5:
-                                intent = new Intent(AddDailyProductsFrom.this, AddActivityToDatabase.class);
-                                startActivity(intent);
-                                break;
 
+                                intent = new Intent(AddDailyProductsFrom.this, GraphActivity.class);
+                                startActivity(intent);
+                                break;
                             case 6:
-                                intent = new Intent(AddDailyProductsFrom.this, AddDailyProducts.class);
+
+                                intent = new Intent(AddDailyProductsFrom.this, SelectDate.class);
                                 startActivity(intent);
                                 break;
-                            case 7:
-                                intent = new Intent(AddDailyProductsFrom.this, AddDailyActivity.class);
-                                startActivity(intent);
-                                break;
-                            case 8:
-                                intent = new Intent(AddDailyProductsFrom.this, EditAddedActivity.class);
-                                startActivity(intent);
                             default:
+
                                 break;
                         }
                         return true;

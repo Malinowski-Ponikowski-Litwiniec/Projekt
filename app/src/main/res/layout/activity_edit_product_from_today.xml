@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_acts"
+    tools:context="com.google.firebase.quickstart.auth.AddDailyProductsFrom">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Dodaj produkt"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:text="Nazwa produktu:"
+                android:textColor="@color/text_white" />
+
+            <TextView
+                android:id="@+id/productName"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/md_black_1000"
+                android:background="@drawable/textfield_white"
+                android:clickable="false" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/textline" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/customborder"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Ilość (w gramach):"
+                    android:clickable="false"
+                    android:textColor="@color/text_white" />
+
+                <EditText
+                    android:id="@+id/amount"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:background="@drawable/textfield_white"
+                    android:text="100"
+                    android:textColor="#000000" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/customborder"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="-25dp"
+                    android:text="Węglowodany:"
+                    android:clickable="false"
+                    android:textColor="@color/text_white" />
+
+                <TextView
+                    android:id="@+id/carbs"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/textfield_white"
+                    android:text=""
+                    android:textColor="@color/text_black"
+                    android:clickable="false"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:focusableInTouchMode="true"
+                android:background="@drawable/customborder"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="-25dp"
+                    android:text="Tłuszcze:"
+                    android:clickable="false"
+                    android:textColor="@color/text_white" />
+
+                <TextView
+                    android:id="@+id/fat"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text=""
+                    android:textColor="@color/text_black"
+                    android:background="@drawable/textfield_white"
+                    android:clickable="false"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:focusableInTouchMode="true"
+                android:background="@drawable/customborder"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="-10dp"
+                    android:text="Białko:"
+                    android:clickable="false"
+                    android:textColor="@color/text_white" />
+
+                <TextView
+                    android:id="@+id/protein"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:textColor="@color/text_black"
+                    android:background="@drawable/textfield_white"
+                    android:clickable="false"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/customborder"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-30dp"
+                    android:gravity="center"
+                    android:text="Kalorie:"
+                    android:clickable="false"
+                    android:textColor="@color/text_white"/>
+
+                <TextView
+                    android:id="@+id/kcal"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/textfield_white"
+                    android:text=""
+                    android:textColor="@color/text_black"
+                    android:clickable="false"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/sniadanie"
+                    android:theme="@style/checkBoxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_white"
+                    android:text="Śniadaie" />
+
+                <CheckBox
+                    android:id="@+id/obiad"
+                    android:theme="@style/checkBoxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Obiad"
+                    android:textColor="@color/text_white"
+                    android:textColorLink="#039BE5" />
+
+                <CheckBox
+                    android:id="@+id/kolacja"
+                    android:theme="@style/checkBoxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_white"
+                    android:text="Kolacja" />
+
+                <CheckBox
+                    android:id="@+id/przekaski"
+                    android:theme="@style/checkBoxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_white"
+                    android:text="Przekąski" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/dodajBtn"
+                style="@style/FirebaseUI.Button"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/custombuttonborder"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="Dodaj" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

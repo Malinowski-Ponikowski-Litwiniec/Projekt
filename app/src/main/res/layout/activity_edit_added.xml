@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/gradient4_edit" >
+        android:background="@drawable/background_acts" >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -26,7 +26,7 @@
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:text="Wybierz ??? z listy"
+            android:text="Wybierz z listy"
             android:textColor="@color/text_white"
             android:textSize="19sp" />
 
@@ -36,11 +36,13 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/searchView"
+        android:background="@drawable/listview_background"
         android:clickable="true"
         android:dividerHeight="3dp"
+        android:gravity="center"
+        android:textAlignment="center"
         tools:ignore="MissingConstraints" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

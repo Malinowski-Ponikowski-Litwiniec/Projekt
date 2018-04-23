@@ -119,9 +119,22 @@ public class Goal extends AppCompatActivity {
 
 
                 Toast.makeText(Goal.this, "Wysłano", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Goal.this, UserProfile.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                myRef.child("lista").child(mAuth.getUid()).child("dataSnapshot").child(dateFormat).child("waga").setValue(Double.valueOf(String.valueOf(weight.getText())));
+
+
+                if(mAuth.getCurrentUser().isEmailVerified()) {
+
+                    Intent intent = new Intent(Goal.this, UserProfile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(Goal.this,"Potwierdź email",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Goal.this,EmailPasswordActivity.class);
+                    startActivity(intent);
+                }
+
+
+
 
             }
         }

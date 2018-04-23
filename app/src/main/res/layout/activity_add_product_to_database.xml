@@ -5,7 +5,7 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient4_edit"
+    android:background="@drawable/background_acts"
     tools:context="com.google.firebase.quickstart.auth.AddProductToDatabase">
 
     <LinearLayout

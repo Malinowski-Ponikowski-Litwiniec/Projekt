@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/gradient4_edit" >
+        android:background="@drawable/background_acts" >
 
 
         <TextView
@@ -145,6 +145,16 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="136dp"
             app:srcCompat="@drawable/textline" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/gif"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="96dp"
+             />
 
 
     </RelativeLayout>

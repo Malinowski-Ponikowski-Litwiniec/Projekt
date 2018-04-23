@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/gradient4_edit" >
+        android:background="@drawable/background_acts" >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -44,7 +44,7 @@
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Nazwa produktu"
+                android:text="Nazwa aktywności:"
                 android:textColor="@color/text_white" />
             <EditText
                 android:id="@+id/name"
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:layout_gravity="center_vertical"
-                    android:text="Czas wykonywania aktywności w minutach:"
+                    android:text="Czas wykonywania \n(w minutach):"
                     android:textColor="@color/text_white" />
 
                 <EditText
@@ -125,14 +125,15 @@
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:layout_marginLeft="-20dp"
                     android:text="Liczba spalonych kalorii:"
                     android:textColor="@color/text_white" />
 
                 <TextView
                     android:id="@+id/kcal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="40dp"
                     android:text=""
                     android:background="@drawable/textfield_white"
                     android:textColor="@color/text_black"

@@ -5,7 +5,7 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient4_edit"
+    android:background="@drawable/background_acts"
     tools:context="com.google.firebase.quickstart.auth.UserProfile">
 
     <RelativeLayout
@@ -34,22 +34,22 @@
 
         <TextView
             android:id="@+id/textView18"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/carbs"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="92dp"
+            android:layout_alignStart="@+id/bmi"
+            android:layout_alignTop="@+id/textView20"
             android:layout_weight="1"
             android:text="Bmi"
             android:textAlignment="center"
-            android:textColor="@color/text_black" />
+            android:textColor="@color/text_white" />
 
         <TextView
             android:id="@+id/bmi"
-            android:layout_width="25dp"
+            android:layout_width="22dp"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView19"
-            android:layout_below="@+id/textView18"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/fat"
+            android:layout_marginStart="34dp"
             android:gravity="center"
             android:text="TextView"
             android:textAlignment="center"
@@ -58,23 +58,22 @@
 
         <TextView
             android:id="@+id/textView19"
-            android:layout_width="wrap_content"
+            android:layout_width="61dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/carbs"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="58dp"
+            android:layout_toStartOf="@+id/menu"
             android:gravity="center"
             android:text="Carbs"
             android:textAlignment="center"
-            android:textColor="@color/text_black" />
+            android:textColor="@color/text_white" />
 
         <TextView
             android:id="@+id/carbs"
             android:layout_width="69dp"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/bar"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView14"
-            android:layout_marginStart="41dp"
+            android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="TextView"
             android:textAlignment="center"
@@ -118,7 +117,7 @@
             android:layout_weight="1"
             android:text="/"
             android:textAlignment="center"
-            android:textColor="#000000" />
+            android:textColor="@color/text_white" />
 
         <TextView
             android:id="@+id/allKcal"
@@ -136,20 +135,19 @@
             android:id="@+id/textView20"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/textView18"
-            android:layout_marginEnd="44dp"
+            android:layout_above="@+id/bmi"
+            android:layout_alignStart="@+id/textView14"
             android:text="Fat"
             android:textAlignment="center"
-            android:textColor="@color/text_black" />
+            android:textColor="@color/text_white" />
 
         <TextView
             android:id="@+id/fat"
             android:layout_width="69dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView20"
-            android:layout_below="@+id/textView18"
-            android:layout_marginStart="-10dp"
+            android:layout_alignEnd="@+id/menu"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="103dp"
             android:gravity="center"
             android:text="TextView"
             android:textAlignment="center"
@@ -160,19 +158,19 @@
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/textView20"
-            android:layout_marginTop="174dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textView19"
+            android:layout_marginEnd="27dp"
             android:text="Protein"
             android:textAlignment="center"
-            android:textColor="@color/text_black" />
+            android:textColor="@color/text_white" />
 
         <!--Protein value-->
         <TextView
             android:id="@+id/protein"
             android:layout_width="76dp"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/fat"
+            android:layout_alignStart="@+id/fat"
             android:layout_below="@+id/textView19"
             android:gravity="center"
             android:text="TextView"
@@ -230,11 +228,11 @@
                 android:id="@+id/fatBar"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="113dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="5"></com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar>
 
             <TextView
@@ -285,22 +283,22 @@
                 android:id="@+id/carbsBar"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="181dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="5"></com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar>
 
             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                 android:id="@+id/proteinBar"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="240dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="5">
 
             </com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar>
@@ -322,8 +320,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/textView22"
                 android:layout_alignStart="@+id/fatBar"
-                android:textColor="@color/text_white"
-                android:text="Białko" />
+                android:text="Białko"
+                android:textColor="@color/text_white" />
 
             <TextView
                 android:id="@+id/textView16"
@@ -334,19 +332,18 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/fatBar"
                 android:layout_marginBottom="202dp"
-                android:textColor="@color/text_white"
-                android:text="Węglowodany" />
+                android:text="Węglowodany"
+                android:textColor="@color/text_white" />
 
             <TextView
                 android:id="@+id/textView21"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/fatBar"
                 android:layout_marginBottom="140dp"
-                android:textColor="@color/text_white"
-                android:text="Tłuszcz" />
+                android:text="Tłuszcz"
+                android:textColor="@color/text_white" />
 
             <TextView
                 android:id="@+id/textView22"
@@ -355,7 +352,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="261dp"
-                android:text="Dzisiaj" />
+                android:text="Dzisiaj"
+                android:textColor="@color/text_white" />
 
             <TextView
                 android:id="@+id/textView23"
@@ -364,7 +362,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@+id/textView22"
                 android:layout_marginEnd="116dp"
-                android:text="Cel" />
+                android:text="Cel"
+                android:textColor="@color/text_white" />
 
             <TextView
                 android:id="@+id/textView24"
@@ -372,7 +371,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/textView22"
                 android:layout_toEndOf="@+id/carbsGoal"
-                android:text="Pozostało" />
+                android:text="Pozostało"
+                android:textColor="@color/text_white" />
         </RelativeLayout>
 
         <com.github.clans.fab.FloatingActionMenu
@@ -384,10 +384,9 @@
             android:layout_marginBottom="13dp"
             android:layout_marginEnd="16dp"
             fab:menu_animationDelayPerItem="50"
-            fab:menu_backgroundColor="@android:color/transparent"
             fab:menu_buttonSpacing="0dp"
-            fab:menu_colorNormal="#DA4336"
-            fab:menu_colorPressed="#E75043"
+            fab:menu_colorNormal="@color/colorAccent"
+            fab:menu_colorPressed="@color/primary_dark"
             fab:menu_colorRipple="#99FFFFFF"
             fab:menu_fab_hide_animation="@anim/fab_scale_down"
             fab:menu_fab_label=""
@@ -411,7 +410,6 @@
             fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
             fab:menu_labels_showShadow="true"
             fab:menu_labels_singleLine="false"
-            fab:menu_labels_style="@style/Animation.Design.BottomSheetDialog"
             fab:menu_labels_textColor="#FFFFFF"
             fab:menu_labels_textSize="14sp"
             fab:menu_openDirection="up"

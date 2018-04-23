@@ -49,7 +49,7 @@ public class DeleteActivity extends AppCompatActivity {
         deleteBtn = (Button) findViewById(R.id.deleteBtn);
         deleteBtn.setOnClickListener(deleteBtnOnClick);
 
-        takCheck.setOnClickListener(takCheckListener);
+    //    takCheck.setOnClickListener(takCheckListener);
 
 
 
@@ -58,20 +58,20 @@ public class DeleteActivity extends AppCompatActivity {
         createDrawer();
     }
 
-    View.OnClickListener takCheckListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (nieCheck.isChecked()) {
-                nieCheck.toggle();
-            }
-        }
-    };
+//    View.OnClickListener takCheckListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            if (nieCheck.isChecked()) {
+//                nieCheck.toggle();
+//            }
+//        }
+//    };
 
     //zdarzenie wykonywanie podczas usuwania konta
     View.OnClickListener deleteBtnOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!takCheck.isChecked() && !nieCheck.isChecked()) {
+            if (!takCheck.isChecked()) {
                 Toast.makeText(DeleteActivity.this, "WYBIERZ OPCJE!!!", Toast.LENGTH_SHORT).show();
             } else {
                 if (takCheck.isChecked()) {
@@ -153,11 +153,10 @@ public class DeleteActivity extends AppCompatActivity {
         PrimaryDrawerItem menu = new PrimaryDrawerItem().withIdentifier(1).withName("Menu").withSelectable(false);
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
-        SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
-        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
+        SecondaryDrawerItem currnetList = new SecondaryDrawerItem().withIdentifier(4).withName("Lista z dzisiejszego dnia");
+        SecondaryDrawerItem graph = new SecondaryDrawerItem().withIdentifier(4).withName("Graph");
+        SecondaryDrawerItem selectDate = new SecondaryDrawerItem().withIdentifier(4).withName("Wybierz date");
+
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -179,7 +178,8 @@ public class DeleteActivity extends AppCompatActivity {
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy,dodajAktywnoscDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc,edytujAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, currnetList,graph,selectDate
+                )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -199,27 +199,22 @@ public class DeleteActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 4:
-                                intent = new Intent(DeleteActivity.this, AddProductToDatabase.class);
+
+                                intent = new Intent(DeleteActivity.this, CurrentList.class);
                                 startActivity(intent);
                                 break;
-
                             case 5:
-                                intent = new Intent(DeleteActivity.this, AddActivityToDatabase.class);
-                                startActivity(intent);
-                                break;
 
+                                intent = new Intent(DeleteActivity.this, GraphActivity.class);
+                                startActivity(intent);
+                                break;
                             case 6:
-                                intent = new Intent(DeleteActivity.this, AddDailyProducts.class);
+
+                                intent = new Intent(DeleteActivity.this, SelectDate.class);
                                 startActivity(intent);
                                 break;
-                            case 7:
-                                intent = new Intent(DeleteActivity.this, AddDailyActivity.class);
-                                startActivity(intent);
-                                break;
-                            case 8:
-                                intent = new Intent(DeleteActivity.this, EditAddedActivity.class);
-                                startActivity(intent);
                             default:
+
                                 break;
                         }
                         return true;

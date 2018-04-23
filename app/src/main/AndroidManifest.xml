@@ -11,7 +11,7 @@
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,18 @@
         <activity android:name=".AddProductToDatabase" />
         <activity android:name=".AddDailyProducts" />
         <activity android:name=".AddDailyProductsFrom" />
-        <activity android:name=".SelectDate"></activity>
+        <activity android:name=".SelectDate" />
+        <activity android:name=".UserProfile" />
+        <activity android:name=".AddDailyActivity" />
+        <activity android:name=".AddDailyActivityForm" />
+        <activity android:name=".EditAddedActivity" />
+        <activity android:name=".EditAddedActivityForm" />
+        <activity android:name=".AddActivityToDatabase" />
+        <activity android:name=".Settings" />
+        <activity android:name=".CurrentList" />
+        <activity android:name=".EditActivityFromToday" />
+        <activity android:name=".EditProductFromToday" />
+        <activity android:name=".GraphActivity"></activity>
     </application>
 
 </manifest>

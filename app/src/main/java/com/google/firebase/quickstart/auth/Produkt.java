@@ -13,8 +13,6 @@ public class Produkt {
     public double kcal;
 
 
-
-
     public Produkt(String name, double amount, double protein, double carbs, double fat, double kcal) {
         this.name = name;
         this.amount = amount;
@@ -23,7 +21,20 @@ public class Produkt {
         this.fat = fat;
         this.kcal = kcal;
     }
-public Produkt(){}
+
+    public Produkt(double amount, double protein, double carbs, double fat, double kcal) {
+
+        this.amount = amount;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+        this.kcal = kcal;
+    }
+
+    public Produkt() {
+    }
+
+
     public String getName() {
         return name;
     }
