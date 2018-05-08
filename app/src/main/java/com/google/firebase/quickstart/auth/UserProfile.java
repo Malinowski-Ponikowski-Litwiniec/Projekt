@@ -3,18 +3,15 @@ package com.google.firebase.quickstart.auth;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.github.clans.fab.FloatingActionButton;
@@ -33,14 +30,10 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -155,8 +148,6 @@ public class UserProfile extends AppCompatActivity {
         setCurKcal();
     }
 
-
-
     View.OnClickListener addProductToDatabaseOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -235,7 +226,6 @@ public class UserProfile extends AppCompatActivity {
             }
         });
     }
-
 
     public void setCurrentMacro() {
         myRef.child("lista").child(mAuth.getUid()).child(dateFormat).child("curMacro").addValueEventListener(new ValueEventListener() {
@@ -355,10 +345,7 @@ public class UserProfile extends AppCompatActivity {
 
             }
         });
-    }
-
-    ;
-
+    };
 
     public void setCurKcal() {
         myRef.child("lista").child(mAuth.getUid()).child(dateFormat).addValueEventListener(new ValueEventListener() {
@@ -511,7 +498,5 @@ public class UserProfile extends AppCompatActivity {
                         return true;
                     }
                 }).build();
-
-
     }
 }
