@@ -4,25 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient4_edit"
+    android:background="@drawable/background_acts"
     tools:context="com.google.firebase.quickstart.auth.DeleteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="650dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-
-            android:theme="@style/AppTheme"
-            app:popupTheme="@style/AppTheme">
+            android:background="?attr/colorPrimary" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -45,7 +39,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
@@ -56,20 +50,22 @@
                     android:layout_marginTop="10dp"
                     android:text="Podaj swój email:"
                     android:textAlignment="center"
+                    android:textSize="18dp"
                     android:textColor="@color/text_white" />
 
                 <EditText
                     android:id="@+id/emailInput"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/textfield_white"
                     android:gravity="center_horizontal|center_vertical"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:textSize="18dp"
+                    android:textColor="@color/text_black"
                     android:theme="@style/MyEditTextTheme" />
 
             </LinearLayout>
@@ -80,13 +76,12 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="50dp"
             android:layout_marginTop="50dp"
-            android:layout_weight="1"
             android:text="Na pewno chcesz usunąć konto?"
             android:textAlignment="center"
             android:textColor="@color/text_white"
-            android:textSize="18dp" />
+            android:textSize="20dp" />
 
 
         <CheckBox
@@ -94,20 +89,20 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/textfield_white"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_gravity="center_vertical|center_horizontal"
+            android:textAlignment="center"
             android:text="Tak"
-            android:textColor="@color/text_white"
-            android:textSize="18dp"
-            android:theme="@style/checkBoxStyle" />
+            android:textColor="@color/md_black_1000"
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/deleteBtn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/custombuttonborder"
             android:text="Usuń konto"
             android:textColor="@color/text_white" />

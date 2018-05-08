@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient4_edit"
+    android:background="@drawable/background_acts"
     tools:context="com.google.firebase.quickstart.auth.SelectDate">
 
     <LinearLayout
@@ -34,11 +34,13 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/searchView"
+            android:background="@drawable/listview_background"
             android:clickable="true"
-            android:dividerHeight="3dp" />
+            android:dividerHeight="3dp"
+            android:gravity="center"
+            android:textAlignment="center" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

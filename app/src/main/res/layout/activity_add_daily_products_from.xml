@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient4_edit"
+    android:background="@drawable/background_acts"
     tools:context="com.google.firebase.quickstart.auth.AddDailyProductsFrom">
     <LinearLayout
         android:layout_width="match_parent"

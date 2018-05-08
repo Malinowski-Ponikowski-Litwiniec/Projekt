@@ -2,6 +2,8 @@ package com.google.firebase.quickstart.auth;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +15,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,10 +42,11 @@ public class AddDailyProducts extends AppCompatActivity {
     public ListView listView;
     Toolbar myToolbar;
 
+    FloatingActionButton floatingButton;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     public FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+    SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,34 +56,22 @@ public class AddDailyProducts extends AppCompatActivity {
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         createDrawer();
+searchView= (SearchView)findViewById(R.id.searchView);
+        floatingButton = (FloatingActionButton)findViewById(R.id.menu);
+        floatingButton.setOnClickListener(floatingButtonOnClick);
+        floatingButton.setColorNormal(Color.parseColor("#039BE5"));
+        floatingButton.setColorPressed(Color.parseColor("#0288D1"));
 
         setList();
     }
 
-
-    View.OnClickListener addProductToDatabaseOnClick = new View.OnClickListener() {
+    View.OnClickListener floatingButtonOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(AddDailyProducts.this,AddProductToDatabase.class);
             startActivity(intent);
         }
     };
-
-    View.OnClickListener addActivityToDatabaseOnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(AddDailyProducts.this,AddActivityToDatabase.class);
-            startActivity(intent);
-        }
-    };
-    View.OnClickListener addActivityToListOnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(AddDailyProducts.this,AddDailyActivity.class);
-            startActivity(intent);
-        }
-    };
-
     //ustawienie trzech kropeczek
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,11 +120,10 @@ public class AddDailyProducts extends AppCompatActivity {
         PrimaryDrawerItem menu = new PrimaryDrawerItem().withIdentifier(1).withName("Menu").withSelectable(false);
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
-        SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
-        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
+        SecondaryDrawerItem currnetList = new SecondaryDrawerItem().withIdentifier(4).withName("Lista z dzisiejszego dnia");
+        SecondaryDrawerItem graph = new SecondaryDrawerItem().withIdentifier(4).withName("Graph");
+        SecondaryDrawerItem selectDate = new SecondaryDrawerItem().withIdentifier(4).withName("Wybierz date");
+
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -153,7 +145,8 @@ public class AddDailyProducts extends AppCompatActivity {
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy,dodajAktywnoscDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc,edytujAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, currnetList,graph,selectDate
+                )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -173,27 +166,22 @@ public class AddDailyProducts extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 4:
-                                intent = new Intent(AddDailyProducts.this, AddProductToDatabase.class);
+
+                                intent = new Intent(AddDailyProducts.this, CurrentList.class);
                                 startActivity(intent);
                                 break;
-
                             case 5:
-                                intent = new Intent(AddDailyProducts.this, AddActivityToDatabase.class);
-                                startActivity(intent);
-                                break;
 
+                                intent = new Intent(AddDailyProducts.this, GraphActivity.class);
+                                startActivity(intent);
+                                break;
                             case 6:
-                                intent = new Intent(AddDailyProducts.this, AddDailyProducts.class);
+
+                                intent = new Intent(AddDailyProducts.this, SelectDate.class);
                                 startActivity(intent);
                                 break;
-                            case 7:
-                                intent = new Intent(AddDailyProducts.this, AddDailyActivity.class);
-                                startActivity(intent);
-                                break;
-                            case 8:
-                                intent = new Intent(AddDailyProducts.this, EditAddedActivity.class);
-                                startActivity(intent);
                             default:
+
                                 break;
                         }
                         return true;
@@ -220,7 +208,35 @@ public class AddDailyProducts extends AppCompatActivity {
                 }
                 arrayAdapter = new ArrayAdapter<String>(AddDailyProducts.this, android.R.layout.simple_list_item_1, list);
 
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        arrayAdapter.getFilter().filter(query);
+                        if(list.contains(query)){
 
+                        }else{
+                            Toast.makeText(AddDailyProducts.this, "Nie ma takiego produktu",Toast.LENGTH_LONG).show();
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        arrayAdapter.getFilter().filter(newText);
+                        return false;
+                    }
+                });
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        String item = ((TextView) view).getText().toString();
+
+                        Intent intent = new Intent(AddDailyProducts.this, AddDailyActivityForm.class);
+                        intent.putExtra("name", item);
+                        startActivity(intent);
+                    }
+                });
                 listView.setAdapter(arrayAdapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view,

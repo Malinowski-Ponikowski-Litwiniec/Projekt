@@ -146,11 +146,10 @@ public class AddProductToDatabase extends AppCompatActivity {
         PrimaryDrawerItem menu = new PrimaryDrawerItem().withIdentifier(1).withName("Menu").withSelectable(false);
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
-        SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
-        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
+        SecondaryDrawerItem currnetList = new SecondaryDrawerItem().withIdentifier(4).withName("Lista z dzisiejszego dnia");
+        SecondaryDrawerItem graph = new SecondaryDrawerItem().withIdentifier(4).withName("Graph");
+        SecondaryDrawerItem selectDate = new SecondaryDrawerItem().withIdentifier(4).withName("Wybierz date");
+
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -172,7 +171,8 @@ public class AddProductToDatabase extends AppCompatActivity {
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy,dodajAktywnoscDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc,edytujAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, currnetList,graph,selectDate
+                )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -192,27 +192,22 @@ public class AddProductToDatabase extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 4:
-                                intent = new Intent(AddProductToDatabase.this, AddProductToDatabase.class);
+
+                                intent = new Intent(AddProductToDatabase.this, CurrentList.class);
                                 startActivity(intent);
                                 break;
-
                             case 5:
-                                intent = new Intent(AddProductToDatabase.this, AddActivityToDatabase.class);
-                                startActivity(intent);
-                                break;
 
+                                intent = new Intent(AddProductToDatabase.this, GraphActivity.class);
+                                startActivity(intent);
+                                break;
                             case 6:
-                                intent = new Intent(AddProductToDatabase.this, AddDailyProducts.class);
+
+                                intent = new Intent(AddProductToDatabase.this, SelectDate.class);
                                 startActivity(intent);
                                 break;
-                            case 7:
-                                intent = new Intent(AddProductToDatabase.this, AddDailyActivity.class);
-                                startActivity(intent);
-                                break;
-                            case 8:
-                                intent = new Intent(AddProductToDatabase.this, EditAddedActivity.class);
-                                startActivity(intent);
                             default:
+
                                 break;
                         }
                         return true;

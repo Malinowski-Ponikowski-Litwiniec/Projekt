@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/gradient4_edit" >
+        android:background="@drawable/background_acts" >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -57,11 +57,14 @@
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="503dp"
+            android:layout_height="500dp"
             android:layout_below="@+id/toolbar"
+            android:background="@drawable/listview_background"
             android:clickable="true"
-            android:divider="@color/md_black_1000"
-            android:dividerHeight="1dp"></ListView>
+            android:dividerHeight="3dp"
+            android:gravity="center"
+            android:textAlignment="center"></ListView>
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

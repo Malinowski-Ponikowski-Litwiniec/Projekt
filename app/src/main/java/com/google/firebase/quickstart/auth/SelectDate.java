@@ -34,6 +34,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SelectDate extends AppCompatActivity {
     public ListView listView;
@@ -48,13 +50,13 @@ public class SelectDate extends AppCompatActivity {
         setContentView(R.layout.activity_select_date);
         listView = (ListView) findViewById(R.id.listView);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
         myRef.child("lista").child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -70,19 +72,204 @@ public class SelectDate extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
                         ArrayList arrayList = new ArrayList();
-                        myRef.child("lista").child(list.get(position)).addValueEventListener(new ValueEventListener() {
+                        Map<String,UserActivities> mapActivity = new HashMap<>();
+
+                        myRef.child("lista").child(mAuth.getUid()).child(list.get(position)).child("aktywnosc").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                if(dataSnapshot.getValue() == null){
-                                    Toast.makeText(SelectDate.this,"Brak danych",Toast.LENGTH_SHORT).show();
-                                }else {
-                                    arrayList.add(dataSnapshot.getValue());
-                                    ArrayAdapter<String> secondArrayAdapter = new ArrayAdapter<String>(SelectDate.this, android.R.layout.simple_list_item_1, arrayList);
+                                if (dataSnapshot.exists()) {
+                                    for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
 
-                                    listView.setAdapter(secondArrayAdapter);
+                                            mapActivity.put(noteDataSnapshot.getKey(), new UserActivities(noteDataSnapshot.getValue(UserActivities.class).getKcal(),
+                                                    noteDataSnapshot.getValue(UserActivities.class).getTime()));
+
+
+                                    }
+//                                    arrayList.add(dataSnapshot.getValue());
+//                                    ArrayAdapter<String> secondArrayAdapter = new ArrayAdapter<String>(SelectDate.this, android.R.layout.simple_list_item_1, arrayList);
+//                                    listView.setAdapter(secondArrayAdapter);
+                                } else {
+                                    //Toast.makeText(SelectDate.this, "Brak danych", Toast.LENGTH_SHORT).show();
                                 }
+
+                                if(!mapActivity.isEmpty()){
+                                    for (Map.Entry<String, UserActivities> entry : mapActivity.entrySet()) {
+                                        System.out.println("++++++++++++++++++ " +entry.getKey() + " ------ " + entry.getValue().getTime() + entry.getValue().getKcal() );
+                                        arrayList.add(entry.getKey() + " czas = " + entry.getValue().getTime() +" kcal = " +  entry.getValue().getKcal()  );
+                                    }
                                 }
+                                Map<String,Produkt> mapProduct = new HashMap<>();
+                                myRef.child("lista").child(mAuth.getUid()).child(list.get(position)).child("sniadanie").addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        if (dataSnapshot.exists()) {
+                                            for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+
+
+                                                mapProduct.put(noteDataSnapshot.getKey(), new Produkt(
+                                                        noteDataSnapshot.getValue(Produkt.class).getAmount(),
+                                                        noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                                                        noteDataSnapshot.getValue(Produkt.class).getCarbs(),
+                                                        noteDataSnapshot.getValue(Produkt.class).getFat(),
+                                                        noteDataSnapshot.getValue(Produkt.class).getKcal()));
+
+                                            }
+//                                    arrayList.add(dataSnapshot.getValue());
+//                                    ArrayAdapter<String> secondArrayAdapter = new ArrayAdapter<String>(SelectDate.this, android.R.layout.simple_list_item_1, arrayList);
+//                                    listView.setAdapter(secondArrayAdapter);
+                                        } else {
+                                            //Toast.makeText(SelectDate.this, "Brak danych", Toast.LENGTH_SHORT).show();
+                                        }
+
+
+
+                                        if(!mapProduct.isEmpty()){
+                                            for (Map.Entry<String, Produkt> entry : mapProduct.entrySet()) {
+                                                System.out.println("++++++++++++++++++ " +entry.getKey() + " ------ " + entry.getValue().getAmount() + entry.getValue().getProtein() +
+                                                        entry.getValue().getCarbs() + entry.getValue().getFat() + entry.getValue().getKcal()) ;
+                                                arrayList.add("sniadanie | " + entry.getKey() + " ilosc = " + entry.getValue().getAmount() + " białko = " +  entry.getValue().getProtein() +
+                                                        " węglowodany =" + entry.getValue().getCarbs() + " tłuszcz = " +entry.getValue().getFat() +" kcal = "+ entry.getValue().getKcal() );
+                                            }
+                                        }
+
+                                        Map<String,Produkt> mapProduct = new HashMap<>();
+                                        myRef.child("lista").child(mAuth.getUid()).child(list.get(position)).child("obiad").addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                if (dataSnapshot.exists()) {
+                                                    for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+
+
+                                                        mapProduct.put(noteDataSnapshot.getKey(), new Produkt(
+                                                                noteDataSnapshot.getValue(Produkt.class).getAmount(),
+                                                                noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                                                                noteDataSnapshot.getValue(Produkt.class).getCarbs(),
+                                                                noteDataSnapshot.getValue(Produkt.class).getFat(),
+                                                                noteDataSnapshot.getValue(Produkt.class).getKcal()));
+
+                                                    }
+//                                    arrayList.add(dataSnapshot.getValue());
+//                                    ArrayAdapter<String> secondArrayAdapter = new ArrayAdapter<String>(SelectDate.this, android.R.layout.simple_list_item_1, arrayList);
+//                                    listView.setAdapter(secondArrayAdapter);
+                                                } else {
+                                                    //Toast.makeText(SelectDate.this, "Brak danych", Toast.LENGTH_SHORT).show();
+                                                }
+
+
+
+                                                if(!mapProduct.isEmpty()){
+                                                    for (Map.Entry<String, Produkt> entry : mapProduct.entrySet()) {
+                                                        System.out.println("++++++++++++++++++ " +entry.getKey() + " ------ " + entry.getValue().getAmount() + entry.getValue().getProtein() +
+                                                                entry.getValue().getCarbs() + entry.getValue().getFat() + entry.getValue().getKcal()) ;
+                                                        arrayList.add("obiad | " + entry.getKey() + " ilosc = " + entry.getValue().getAmount() + " białko = " +  entry.getValue().getProtein() +
+                                                                " węglowodany =" + entry.getValue().getCarbs() + " tłuszcz = " +entry.getValue().getFat() +" kcal = "+ entry.getValue().getKcal() );
+                                                    }
+                                                }
+                                                Map<String,Produkt> mapProduct = new HashMap<>();
+                                                myRef.child("lista").child(mAuth.getUid()).child(list.get(position)).child("kolacja").addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                        if (dataSnapshot.exists()) {
+                                                            for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+
+
+                                                                mapProduct.put(noteDataSnapshot.getKey(), new Produkt(
+                                                                        noteDataSnapshot.getValue(Produkt.class).getAmount(),
+                                                                        noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                                                                        noteDataSnapshot.getValue(Produkt.class).getCarbs(),
+                                                                        noteDataSnapshot.getValue(Produkt.class).getFat(),
+                                                                        noteDataSnapshot.getValue(Produkt.class).getKcal()));
+
+                                                            }
+//                                    arrayList.add(dataSnapshot.getValue());
+//                                    ArrayAdapter<String> secondArrayAdapter = new ArrayAdapter<String>(SelectDate.this, android.R.layout.simple_list_item_1, arrayList);
+//                                    listView.setAdapter(secondArrayAdapter);
+                                                        } else {
+                                                            //Toast.makeText(SelectDate.this, "Brak danych", Toast.LENGTH_SHORT).show();
+                                                        }
+
+
+
+                                                        if(!mapProduct.isEmpty()){
+                                                            for (Map.Entry<String, Produkt> entry : mapProduct.entrySet()) {
+                                                                System.out.println("++++++++++++++++++ " +entry.getKey() + " ------ " + entry.getValue().getAmount() + entry.getValue().getProtein() +
+                                                                        entry.getValue().getCarbs() + entry.getValue().getFat() + entry.getValue().getKcal()) ;
+                                                                arrayList.add("kolacja | " + entry.getKey() + " ilosc = " + entry.getValue().getAmount() + " białko = " +  entry.getValue().getProtein() +
+                                                                        " węglowodany =" + entry.getValue().getCarbs() + " tłuszcz = " +entry.getValue().getFat() +" kcal = "+ entry.getValue().getKcal() );
+                                                            }
+                                                        }
+                                                        Map<String,Produkt> mapProduct = new HashMap<>();
+                                                        myRef.child("lista").child(mAuth.getUid()).child(list.get(position)).child("przekaski").addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                                if (dataSnapshot.exists()) {
+                                                                    for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+
+
+                                                                        mapProduct.put(noteDataSnapshot.getKey(), new Produkt(
+                                                                                noteDataSnapshot.getValue(Produkt.class).getAmount(),
+                                                                                noteDataSnapshot.getValue(Produkt.class).getProtein(),
+                                                                                noteDataSnapshot.getValue(Produkt.class).getCarbs(),
+                                                                                noteDataSnapshot.getValue(Produkt.class).getFat(),
+                                                                                noteDataSnapshot.getValue(Produkt.class).getKcal()));
+
+                                                                    }
+//                                    arrayList.add(dataSnapshot.getValue());
+//                                    ArrayAdapter<String> secondArrayAdapter = new ArrayAdapter<String>(SelectDate.this, android.R.layout.simple_list_item_1, arrayList);
+//                                    listView.setAdapter(secondArrayAdapter);
+                                                                } else {
+                                                                    //Toast.makeText(SelectDate.this, "Brak danych", Toast.LENGTH_SHORT).show();
+                                                                }
+
+
+
+                                                                if(!mapProduct.isEmpty()){
+                                                                    for (Map.Entry<String, Produkt> entry : mapProduct.entrySet()) {
+                                                                        System.out.println("++++++++++++++++++ " +entry.getKey() + " ------ " + entry.getValue().getAmount() + entry.getValue().getProtein() +
+                                                                                entry.getValue().getCarbs() + entry.getValue().getFat() + entry.getValue().getKcal()) ;
+                                                                        arrayList.add("przekaski | " + entry.getKey() + " ilosc = " + entry.getValue().getAmount() + " białko = " +  entry.getValue().getProtein() +
+                                                                                " węglowodany =" + entry.getValue().getCarbs() + " tłuszcz = " +entry.getValue().getFat() +" kcal = "+ entry.getValue().getKcal() );
+                                                                    }
+                                                                }
+                                                                ArrayAdapter<String> secondArrayAdapter = new ArrayAdapter<String>(SelectDate.this, android.R.layout.simple_list_item_1, arrayList);
+
+                                                                listView.setAdapter(secondArrayAdapter);
+
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
 
 
                             @Override
@@ -90,7 +277,10 @@ public class SelectDate extends AppCompatActivity {
 
                             }
                         });
+
                     }
+
+
                 });
             }
 
@@ -102,6 +292,7 @@ public class SelectDate extends AppCompatActivity {
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         createDrawer();
+
     }
 
     //ustawienie trzech kropeczek
@@ -151,11 +342,10 @@ public class SelectDate extends AppCompatActivity {
         PrimaryDrawerItem menu = new PrimaryDrawerItem().withIdentifier(1).withName("Menu").withSelectable(false);
         SecondaryDrawerItem profil = new SecondaryDrawerItem().withIdentifier(2).withName("Profil");
         SecondaryDrawerItem edytujProfil = new SecondaryDrawerItem().withIdentifier(3).withName("Edytuj Profil");
-        SecondaryDrawerItem dodajDoBazy = new SecondaryDrawerItem().withIdentifier(4).withName("Dodaj produkt do bazy");
-        SecondaryDrawerItem dodajAktywnoscDoBazy = new SecondaryDrawerItem().withIdentifier(5).withName("Dodaj aktywność do bazy");
-        SecondaryDrawerItem dodajDoDziennejListy = new SecondaryDrawerItem().withIdentifier(6).withName("Dodaj produkt do dziennej listy");
-        SecondaryDrawerItem dodajDoDziennejListyAktywnosc = new SecondaryDrawerItem().withIdentifier(7).withName("Dodaj aktywność do dziennej listy");
-        SecondaryDrawerItem edytujAktywnosc = new SecondaryDrawerItem().withIdentifier(8).withName("Edytuj dodaną aktywność ");
+        SecondaryDrawerItem currnetList = new SecondaryDrawerItem().withIdentifier(4).withName("Lista z dzisiejszego dnia");
+        SecondaryDrawerItem graph = new SecondaryDrawerItem().withIdentifier(4).withName("Graph");
+        SecondaryDrawerItem selectDate = new SecondaryDrawerItem().withIdentifier(4).withName("Wybierz date");
+
 
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -177,7 +367,8 @@ public class SelectDate extends AppCompatActivity {
                 .withToolbar(myToolbar)
                 .withDrawerLayout(R.layout.drawer_layout)
 
-                .addDrawerItems(menu, profil, edytujProfil, dodajDoBazy,dodajAktywnoscDoBazy, dodajDoDziennejListy,dodajDoDziennejListyAktywnosc,edytujAktywnosc)
+                .addDrawerItems(menu, profil, edytujProfil, currnetList,graph,selectDate
+                )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -197,27 +388,22 @@ public class SelectDate extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 4:
-                                intent = new Intent(SelectDate.this, AddProductToDatabase.class);
+
+                                intent = new Intent(SelectDate.this, CurrentList.class);
                                 startActivity(intent);
                                 break;
-
                             case 5:
-                                intent = new Intent(SelectDate.this, AddActivityToDatabase.class);
-                                startActivity(intent);
-                                break;
 
+                                intent = new Intent(SelectDate.this, GraphActivity.class);
+                                startActivity(intent);
+                                break;
                             case 6:
-                                intent = new Intent(SelectDate.this, AddDailyProducts.class);
+
+                                intent = new Intent(SelectDate.this, SelectDate.class);
                                 startActivity(intent);
                                 break;
-                            case 7:
-                                intent = new Intent(SelectDate.this, AddDailyActivity.class);
-                                startActivity(intent);
-                                break;
-                            case 8:
-                                intent = new Intent(SelectDate.this, EditAddedActivity.class);
-                                startActivity(intent);
                             default:
+
                                 break;
                         }
                         return true;

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CurrentList">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_acts">
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Twój dzienny spis"
+                android:textColor="@color/text_white"
+                android:textSize="20sp" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="80dp">
+
+
+            <com.asksira.dropdownview.DropDownView
+                android:id="@+id/dropdownviewSniadanie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:arrow_drawable="@drawable/andrzej"
+                app:arrow_width="24dp"
+                app:divider_color="@android:color/holo_orange_light"
+                app:dropDownItem_text_color_selected="@android:color/holo_orange_dark"
+                app:dropDownItem_text_size_selected="18sp"
+                app:filter_text_color="@android:color/white"
+                app:placeholder_text="Śniadanie" />
+
+            <com.asksira.dropdownview.DropDownView
+
+                android:id="@+id/dropdownviewObiad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:arrow_drawable="@drawable/andrzej"
+                app:arrow_width="24dp"
+                android:layout_marginTop="50dp"
+                app:divider_color="@android:color/holo_orange_light"
+                app:dropDownItem_text_color_selected="@android:color/holo_orange_dark"
+                app:dropDownItem_text_size_selected="18sp"
+                app:filter_text_color="@android:color/white"
+                app:placeholder_text="Obiad" />
+
+            <com.asksira.dropdownview.DropDownView
+
+                android:id="@+id/dropdownviewKolacja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:arrow_drawable="@drawable/andrzej"
+                app:arrow_width="24dp"
+                android:layout_marginTop="50dp"
+                app:divider_color="@android:color/holo_orange_light"
+                app:dropDownItem_text_color_selected="@android:color/holo_orange_dark"
+                app:dropDownItem_text_size_selected="18sp"
+                app:filter_text_color="@android:color/white"
+                app:placeholder_text="Kolacja" />
+
+            <com.asksira.dropdownview.DropDownView
+
+                android:id="@+id/dropdownviewPrzekaski"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:arrow_drawable="@drawable/andrzej"
+                app:arrow_width="24dp"
+                android:layout_marginTop="50dp"
+                app:divider_color="@android:color/holo_orange_light"
+                app:dropDownItem_text_color_selected="@android:color/holo_orange_dark"
+                app:dropDownItem_text_size_selected="18sp"
+                app:filter_text_color="@android:color/white"
+                app:placeholder_text="Przekąśki" />
+            <com.asksira.dropdownview.DropDownView
+                android:id="@+id/dropdownview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:arrow_drawable="@drawable/andrzej"
+                android:layout_marginTop="50dp"
+                app:arrow_width="24dp"
+                app:divider_color="@android:color/holo_orange_light"
+                app:dropDownItem_text_size_selected="18sp"
+                app:filter_text_color="@android:color/white"
+                app:placeholder_text="Aktynowści" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>
+</android.support.constraint.ConstraintLayout>
