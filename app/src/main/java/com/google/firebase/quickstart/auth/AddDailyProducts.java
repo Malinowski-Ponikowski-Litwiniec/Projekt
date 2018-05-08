@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -61,6 +63,12 @@ searchView= (SearchView)findViewById(R.id.searchView);
         floatingButton.setOnClickListener(floatingButtonOnClick);
         floatingButton.setColorNormal(Color.parseColor("#039BE5"));
         floatingButton.setColorPressed(Color.parseColor("#0288D1"));
+
+        // Zmiana koloru status bara
+        Window window = EmailPasswordActivity.this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(EmailPasswordActivity.this.getResources().getColor(R.color.grey_dark));
 
         setList();
     }

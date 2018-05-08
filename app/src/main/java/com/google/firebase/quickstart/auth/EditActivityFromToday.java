@@ -2,6 +2,7 @@ package com.google.firebase.quickstart.auth;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,6 +74,9 @@ public class EditActivityFromToday extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat = simpleDateFormat.format(date);
 
+        //Zmiana koloru paska nawigacji
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.md_black_1000));
 
         time = (EditText) findViewById(R.id.time);
         kcal = (TextView) findViewById(R.id.kcal);

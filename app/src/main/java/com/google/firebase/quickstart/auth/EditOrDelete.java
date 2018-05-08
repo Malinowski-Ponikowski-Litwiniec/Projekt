@@ -2,6 +2,7 @@ package com.google.firebase.quickstart.auth;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,6 +47,17 @@ public class EditOrDelete extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         showDates = (Button)findViewById(R.id.showDates);
         showDates.setOnClickListener(showDatesOnClick);
+
+        // Zmiana koloru status bara
+        Window window = EmailPasswordActivity.this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(EmailPasswordActivity.this.getResources().getColor(R.color.grey_dark));
+
+        //Zmiana koloru paska nawigacji
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.md_black_1000));
+
     }
 
     View.OnClickListener showDatesOnClick = new View.OnClickListener() {

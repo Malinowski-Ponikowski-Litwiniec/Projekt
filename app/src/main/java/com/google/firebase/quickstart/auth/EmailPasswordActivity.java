@@ -69,10 +69,14 @@ public class EmailPasswordActivity extends BaseActivity implements
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(EmailPasswordActivity.this.getResources().getColor(R.color.grey_dark));
 
+        //Zmiana koloru paska nawigacji
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.md_black_1000));
+
         mEmailField = findViewById(R.id.field_email);
         mPasswordField = findViewById(R.id.field_password);
 
-        // Buttons
+        // Buttony
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         findViewById(R.id.email_create_account_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
